@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://24tx5187lk2d"]
+
+[ext_resource type="PackedScene" uid="uid://cgylckqn2dhxo" path="res://scenes/player.tscn" id="1_3gyjv"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_akoim"]
+size = Vector2(1000, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0f4e6"]
+size = Vector2(1153, 100)
+
+[node name="World" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_3gyjv")]
+position = Vector2(593, 136)
+jump_force = 700
+
+[node name="FloorPlatform" type="StaticBody2D" parent="."]
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="FloorPlatform"]
+position = Vector2(575, 596)
+scale = Vector2(1.152, 1)
+mesh = SubResource("QuadMesh_akoim")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FloorPlatform"]
+position = Vector2(575.5, 597)
+shape = SubResource("RectangleShape2D_0f4e6")
+
+[node name="Jump platform" type="StaticBody2D" parent="."]
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="Jump platform"]
+position = Vector2(1772, 476)
+scale = Vector2(1.152, 1)
+mesh = SubResource("QuadMesh_akoim")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Jump platform"]
+position = Vector2(1773, 477)
+shape = SubResource("RectangleShape2D_0f4e6")
