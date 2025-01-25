@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://dera13mgigo4h"]
+
+[ext_resource type="Texture2D" uid="uid://chd4qglvnap4t" path="res://assets/godette_pawn.png" id="1_v4p0i"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ar55e"]
+size = Vector3(3.4, 4, 2)
+
+[node name="Godette" type="CharacterBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+shape = SubResource("BoxShape3D_ar55e")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 0, 0)
+texture = ExtResource("1_v4p0i")
+
+[node name="Camera3D" type="Camera3D" parent="Sprite3D"]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 4.9282, 7.4641)

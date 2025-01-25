@@ -1,39 +1,60 @@
-[gd_scene load_steps=5 format=3 uid="uid://b3585ar68u64k"]
+[gd_scene load_steps=9 format=3 uid="uid://cebxl3vrp6i5d"]
 
-[ext_resource type="PackedScene" uid="uid://b3ykv5xvoy7va" path="res://scenes/player.tscn" id="1_aesx6"]
-[ext_resource type="Texture2D" uid="uid://b52gbo6bakxef" path="res://icon.svg" id="2_wsl6l"]
+[ext_resource type="PackedScene" uid="uid://dera13mgigo4h" path="res://scenes/godette.tscn" id="1_lq6ih"]
+[ext_resource type="Script" path="res://scripts/godette.gd" id="2_wugei"]
 
-[sub_resource type="QuadMesh" id="QuadMesh_xatlc"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_fbr51"]
+size = Vector3(128, 1, 128)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vds7n"]
-size = Vector2(384, 60)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5xaff"]
 
-[node name="World" type="Node2D"]
+[sub_resource type="BoxMesh" id="BoxMesh_porb0"]
+material = SubResource("StandardMaterial3D_5xaff")
+size = Vector3(128, 1, 128)
 
-[node name="Player" parent="." instance=ExtResource("1_aesx6")]
-position = Vector2(597, 315)
+[sub_resource type="BoxShape3D" id="BoxShape3D_ulenc"]
+size = Vector3(32, 1, 32)
 
-[node name="platform" type="StaticBody2D" parent="."]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kayun"]
+albedo_color = Color(0.705939, 3.53761e-06, 3.85046e-07, 1)
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="platform"]
-position = Vector2(589, 465)
-scale = Vector2(384, 60)
-mesh = SubResource("QuadMesh_xatlc")
-texture = ExtResource("2_wsl6l")
+[sub_resource type="BoxMesh" id="BoxMesh_v36lf"]
+material = SubResource("StandardMaterial3D_kayun")
+size = Vector3(32, 1, 32)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="platform"]
-position = Vector2(589, 465)
-shape = SubResource("RectangleShape2D_vds7n")
+[node name="World" type="Node3D"]
 
-[node name="platform2" type="StaticBody2D" parent="."]
-position = Vector2(419, -47)
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 40, 0)
+shadow_enabled = true
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="platform2"]
-position = Vector2(589, 465)
-scale = Vector2(384, 60)
-mesh = SubResource("QuadMesh_xatlc")
-texture = ExtResource("2_wsl6l")
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="platform2"]
-position = Vector2(589, 465)
-shape = SubResource("RectangleShape2D_vds7n")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_fbr51")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_porb0")
+
+[node name="Platform" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -35)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Platform"]
+shape = SubResource("BoxShape3D_ulenc")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Platform"]
+mesh = SubResource("BoxMesh_v36lf")
+
+[node name="Platform2" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.965926, -0.258819, 0, 0.258819, 0.965926, -2, -2, -4)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Platform2"]
+shape = SubResource("BoxShape3D_ulenc")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Platform2"]
+mesh = SubResource("BoxMesh_v36lf")
+
+[node name="Godette" parent="." instance=ExtResource("1_lq6ih")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0)
+script = ExtResource("2_wugei")
