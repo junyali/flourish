@@ -455,12 +455,13 @@ radius = 54.1479
 radius = 5.0
 
 [node name="slime" type="CharacterBody2D"]
+motion_mode = 1
 script = ExtResource("1_al1ro")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_62m3c")
 animation = &"front_idle"
-frame_progress = 0.78507
+frame_progress = 0.365281
 offset = Vector2(0, -6)
 
 [node name="Aggro" type="Area2D" parent="."]

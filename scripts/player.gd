@@ -2,69 +2,46 @@ extends CharacterBody2D
 
 
 const SPEED = 100.0
-var current_dir = "none"
+var direction : Vector2 = Vector2.ZERO
+var current_dur = "(0, 0)"
+var animatedir_dict = {
+	"(0, -1)": ["back_idle", "back_walk", "back_jump", "back_attack"],
+	"(0, 1)": ["front_idle", "front_walk", "front_jump", "front_attack"],
+	"(-1, 0)": ["side_idle", "side_walk", "side_jump", "side_attack"],
+	"(1, 0)": ["side_idle", "side_walk", "side_jump", "side_attack"]
+}
+
 
 func _ready():
-	$AnimatedSprite2D.play("front_idle")
+	$AnimatedSprite2D.play(animatedir_dict["(0, 1)"][0])
 
 func _physics_process(delta: float) -> void:
-	player_movement(delta)
+	# Get Player direction via input
+	direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	
-func player_movement(delta: float) -> void:
-	
-	# Main movement
-	if Input.is_action_pressed("move_right"):
-		current_dir = "right"
-		play_animation(1)
-		velocity.x = SPEED
-		velocity.y = 0
-	elif Input.is_action_pressed("move_left"):
-		current_dir = "left"
-		play_animation(1)
-		velocity.x = -SPEED
-		velocity.y = 0
-	elif Input.is_action_pressed("move_up"):
-		current_dir = "up"
-		play_animation(1)
-		velocity.x = 0
-		velocity.y = -SPEED
-	elif Input.is_action_pressed("move_down"):
-		current_dir = "down"
-		play_animation(1)
-		velocity.x = 0
-		velocity.y = SPEED
+	if direction:
+		current_dur = direction
+		play_animation(1, direction)
+		velocity = direction * SPEED
 	else:
-		play_animation(0)
-		velocity.x = 0
-		velocity.y = 0
+		play_animation(0, current_dur) # No movement
+		velocity = Vector2.ZERO
 		
 	move_and_slide()
 	
-func play_animation(movement):
-	var dir = current_dir
+func play_animation(ismoving, direction):
+	var dir = str(direction)
 	var anim = $AnimatedSprite2D
 	
-	if dir == "right":
-		anim.flip_h = false
-		if movement == 1:
-			anim.play("side_walk")
-		elif movement == 0:
-			anim.play("side_idle")
-	elif dir == "left":
-		anim.flip_h = true
-		if movement == 1:
-			anim.play("side_walk")
-		elif movement == 0:
-			anim.play("side_idle")
-	elif dir == "up":
-		anim.flip_h = false
-		if movement == 1:
-			anim.play("back_walk")
-		elif movement == 0:
-			anim.play("back_idle")
-	elif dir == "down":
-		anim.flip_h = false
-		if movement == 1:
-			anim.play("front_walk")
-		elif movement == 0:
-			anim.play("front_idle")
+	if animatedir_dict.has(dir):
+		var actionpose = animatedir_dict[dir][1]
+		var idlepose = animatedir_dict[dir][0]
+		
+		if ismoving:
+			if direction.x == -1:
+				anim.flip_h = true
+			elif direction.x == 1:
+				anim.flip_h = false
+			anim.play(actionpose)
+		else:
+			anim.play(idlepose)
