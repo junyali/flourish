@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://b0wfwegu6kl41"]
+[gd_scene load_steps=57 format=3 uid="uid://b0wfwegu6kl41"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_iqjej"]
 [ext_resource type="Texture2D" uid="uid://dcn18xinm3esl" path="res://art/characters/player.png" id="2_o2002"]
@@ -416,6 +416,9 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_kxhnw"]
 radius = 4.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_3dhac"]
+radius = 11.0
+
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 3
 motion_mode = 1
@@ -432,3 +435,15 @@ offset = Vector2(0, -16)
 y_sort_enabled = true
 position = Vector2(0, -3)
 shape = SubResource("CircleShape2D_kxhnw")
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, -8)
+shape = SubResource("CircleShape2D_3dhac")
+
+[node name="Attack_CD" type="Timer" parent="."]
+
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="body_exited" from="Hitbox" to="." method="_on_hitbox_body_exited"]
+[connection signal="timeout" from="Attack_CD" to="." method="_on_attack_cd_timeout"]

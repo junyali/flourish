@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://cinitpgfbcpae"]
+[gd_scene load_steps=63 format=3 uid="uid://cinitpgfbcpae"]
 
 [ext_resource type="Texture2D" uid="uid://clx8rxl4mv7ov" path="res://art/characters/slime.png" id="1_1drkh"]
 [ext_resource type="Script" path="res://scripts/slime.gd" id="1_al1ro"]
@@ -454,6 +454,8 @@ radius = 54.1479
 [sub_resource type="CircleShape2D" id="CircleShape2D_egr0a"]
 radius = 5.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_kxtvq"]
+
 [node name="slime" type="CharacterBody2D"]
 motion_mode = 1
 script = ExtResource("1_al1ro")
@@ -475,6 +477,12 @@ shape = SubResource("CircleShape2D_ns0bj")
 y_sort_enabled = true
 position = Vector2(0, -4)
 shape = SubResource("CircleShape2D_egr0a")
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, -3)
+shape = SubResource("CircleShape2D_kxtvq")
 
 [connection signal="body_shape_entered" from="Aggro" to="." method="_on_aggro_body_shape_entered"]
 [connection signal="body_shape_exited" from="Aggro" to="." method="_on_aggro_body_shape_exited"]

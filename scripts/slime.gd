@@ -28,3 +28,6 @@ func _on_aggro_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index:
 func _on_aggro_body_shape_exited(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
 	PLAYER = null
 	PLAYER_CHASE = false
+
+func enemy():
+	pass

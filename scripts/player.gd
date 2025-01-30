@@ -1,5 +1,9 @@
 extends CharacterBody2D
 
+var enemy_in_attack_range = false
+var enemy_attack_cooldown = true
+var health = 100
+var player_alive = true
 
 const SPEED = 100.0
 var direction : Vector2 = Vector2.ZERO
@@ -28,6 +32,13 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector2.ZERO
 		
 	move_and_slide()
+	enemy_attack()
+	
+	if health <= 0:
+		player_alive = false
+		health = 0
+		print("player has been killed")
+		
 	
 func play_animation(ismoving, direction):
 	var dir = str(direction)
@@ -45,3 +56,26 @@ func play_animation(ismoving, direction):
 			anim.play(actionpose)
 		else:
 			anim.play(idlepose)
+			
+func player():
+	pass
+
+func _on_hitbox_body_entered(body: Node2D) -> void:
+	if body.has_method("enemy"):
+		enemy_in_attack_range = true
+
+
+func _on_hitbox_body_exited(body: Node2D) -> void:
+	if body.has_method("enemy"):
+		enemy_in_attack_range = false
+		
+func enemy_attack():
+	if enemy_in_attack_range and enemy_attack_cooldown == true:
+		health -= 20
+		enemy_attack_cooldown = false
+		$Attack_CD.start()
+		print(health)
+		
+
+func _on_attack_cd_timeout() -> void:
+	enemy_attack_cooldown = true
