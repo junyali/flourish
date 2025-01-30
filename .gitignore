@@ -2,8 +2,5 @@
 .godot/
 /android/
 
-# Addons
-addons/
-
 # Private
-assetref/
+brainstorming/
