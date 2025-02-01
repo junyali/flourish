@@ -4,7 +4,12 @@ var SPEED = 40
 var PLAYER_CHASE = false
 var PLAYER = null
 
+var health = 100
+var player_in_attack_zone = false
+
 func _physics_process(delta: float) -> void:
+	deal_with_damage()
+	
 	if PLAYER_CHASE:
 		if position.distance_to(PLAYER.position) > 10:
 			
@@ -31,3 +36,19 @@ func _on_aggro_body_shape_exited(body_rid: RID, body: Node2D, body_shape_index: 
 
 func enemy():
 	pass
+
+
+func _on_hitbox_body_entered(body: Node2D) -> void:
+	if body.has_method("player"):
+		player_in_attack_zone = true
+
+
+func _on_hitbox_body_exited(body: Node2D) -> void:
+	if body.has_method("player"):
+		player_in_attack_zone = false
+		
+func deal_with_damage():
+	if player_in_attack_zone and Main.player_current_attack == true:
+		health -= 20
+		if health <= 0:
+			self.queue_free()

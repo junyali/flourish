@@ -7,7 +7,7 @@ var player_alive = true
 
 const SPEED = 100.0
 var direction : Vector2 = Vector2.ZERO
-var current_dur = "(0, 0)"
+var current_dir = "(0, 0)"
 var animatedir_dict = {
 	"(0, -1)": ["back_idle", "back_walk", "back_jump", "back_attack"],
 	"(0, 1)": ["front_idle", "front_walk", "front_jump", "front_attack"],
@@ -15,6 +15,7 @@ var animatedir_dict = {
 	"(1, 0)": ["side_idle", "side_walk", "side_jump", "side_attack"]
 }
 
+var attack_in_progress = false
 
 func _ready():
 	$AnimatedSprite2D.play(animatedir_dict["(0, 1)"][0])
@@ -24,15 +25,18 @@ func _physics_process(delta: float) -> void:
 	direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	
 	if direction:
-		current_dur = direction
-		play_animation(1, direction)
+		current_dir = direction
+		if not attack_in_progress:
+			play_animation(1, direction)
 		velocity = direction * SPEED
 	else:
-		play_animation(0, current_dur) # No movement
+		if not attack_in_progress:
+			play_animation(0, current_dir) # No movement
 		velocity = Vector2.ZERO
 		
 	move_and_slide()
 	enemy_attack()
+	attack()
 	
 	if health <= 0:
 		player_alive = false
@@ -79,3 +83,24 @@ func enemy_attack():
 
 func _on_attack_cd_timeout() -> void:
 	enemy_attack_cooldown = true
+	
+func attack():
+	var dir = str(current_dir)
+	var anim = $AnimatedSprite2D
+	
+	if Input.is_action_just_pressed("attack"):
+		Main.player_current_attack = true
+		attack_in_progress = true
+		if animatedir_dict.has(dir):
+			var attackanim = animatedir_dict[dir][3]
+			if current_dir.x == -1:
+				anim.flip_h = true
+			elif current_dir.x == 1:
+				anim.flip_h = false
+			anim.play(attackanim)
+		$Deal_Attack_CD.start()
+			
+func _on_Deal_Attack_CD_timeout():
+	$Deal_Attack_CD.stop()
+	Main.player_current_attack = false
+	attack_in_progress = false
