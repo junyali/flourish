@@ -429,8 +429,6 @@ sprite_frames = SubResource("SpriteFrames_7w434")
 animation = &"front_idle"
 offset = Vector2(0, -16)
 
-[node name="Camera2D" type="Camera2D" parent="AnimatedSprite2D"]
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 y_sort_enabled = true
 position = Vector2(0, -3)
@@ -446,6 +444,17 @@ shape = SubResource("CircleShape2D_3dhac")
 
 [node name="Deal_Attack_CD" type="Timer" parent="."]
 wait_time = 0.5
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
+rotation_smoothing_enabled = true
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_left_margin = 0.1
+drag_top_margin = 0.1
+drag_right_margin = 0.1
+drag_bottom_margin = 0.1
 
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="body_exited" from="Hitbox" to="." method="_on_hitbox_body_exited"]
