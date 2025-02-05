@@ -6,6 +6,7 @@ var PLAYER = null
 
 var health = 100
 var player_in_attack_zone = false
+var can_take_damage = true
 
 func _physics_process(delta: float) -> void:
 	deal_with_damage()
@@ -49,6 +50,16 @@ func _on_hitbox_body_exited(body: Node2D) -> void:
 		
 func deal_with_damage():
 	if player_in_attack_zone and Main.player_current_attack == true:
-		health -= 20
-		if health <= 0:
-			self.queue_free()
+		if can_take_damage:
+			$iframe.start()
+			can_take_damage = false
+			health -= 20
+			if health <= 0:
+				$AnimatedSprite2D.play("death")
+			
+func _on_animated_sprite_2d_animation_finished() -> void:
+	if health <= 0:
+		self.queue_free()
+
+func _on_iframe_timeout() -> void:
+	can_take_damage = true

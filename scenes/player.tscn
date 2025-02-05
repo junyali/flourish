@@ -426,7 +426,7 @@ script = ExtResource("1_iqjej")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_7w434")
-animation = &"side_attack"
+animation = &"front_idle"
 offset = Vector2(0, -16)
 
 [node name="Camera2D" type="Camera2D" parent="AnimatedSprite2D"]
@@ -445,7 +445,9 @@ shape = SubResource("CircleShape2D_3dhac")
 [node name="Attack_CD" type="Timer" parent="."]
 
 [node name="Deal_Attack_CD" type="Timer" parent="."]
+wait_time = 0.5
 
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="body_exited" from="Hitbox" to="." method="_on_hitbox_body_exited"]
 [connection signal="timeout" from="Attack_CD" to="." method="_on_attack_cd_timeout"]
+[connection signal="timeout" from="Deal_Attack_CD" to="." method="_on_deal_attack_cd_timeout"]

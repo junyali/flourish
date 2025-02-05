@@ -311,7 +311,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_c7xt0")
 }],
-"loop": true,
+"loop": false,
 "name": &"death",
 "speed": 5.0
 }, {
@@ -462,8 +462,8 @@ script = ExtResource("1_al1ro")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_62m3c")
-animation = &"front_idle"
-frame_progress = 0.365281
+animation = &"side_run"
+frame_progress = 0.241009
 offset = Vector2(0, -6)
 
 [node name="Aggro" type="Area2D" parent="."]
@@ -484,7 +484,11 @@ shape = SubResource("CircleShape2D_egr0a")
 position = Vector2(0, -3)
 shape = SubResource("CircleShape2D_kxtvq")
 
+[node name="iframe" type="Timer" parent="."]
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_shape_entered" from="Aggro" to="." method="_on_aggro_body_shape_entered"]
 [connection signal="body_shape_exited" from="Aggro" to="." method="_on_aggro_body_shape_exited"]
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="body_exited" from="Hitbox" to="." method="_on_hitbox_body_exited"]
+[connection signal="timeout" from="iframe" to="." method="_on_iframe_timeout"]

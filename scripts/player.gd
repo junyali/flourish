@@ -7,7 +7,7 @@ var player_alive = true
 
 const SPEED = 100.0
 var direction : Vector2 = Vector2.ZERO
-var current_dir = "(0, 0)"
+var current_dir = Vector2(0, 1)
 var animatedir_dict = {
 	"(0, -1)": ["back_idle", "back_walk", "back_jump", "back_attack"],
 	"(0, 1)": ["front_idle", "front_walk", "front_jump", "front_attack"],
@@ -99,8 +99,8 @@ func attack():
 				anim.flip_h = false
 			anim.play(attackanim)
 		$Deal_Attack_CD.start()
-			
-func _on_Deal_Attack_CD_timeout():
+
+func _on_deal_attack_cd_timeout() -> void:
 	$Deal_Attack_CD.stop()
 	Main.player_current_attack = false
 	attack_in_progress = false
