@@ -28,15 +28,16 @@ func _physics_process(delta: float) -> void:
 		current_dir = direction
 		if not attack_in_progress:
 			play_animation(1, direction)
-		velocity = direction * SPEED
+			velocity = direction * SPEED
 	else:
 		if not attack_in_progress:
 			play_animation(0, current_dir) # No movement
-		velocity = Vector2.ZERO
-		
-	move_and_slide()
+			velocity = Vector2.ZERO
+	if not attack_in_progress:
+		move_and_slide()
 	enemy_attack()
 	attack()
+	update_health()
 	
 	if health <= 0:
 		player_alive = false
@@ -75,7 +76,7 @@ func _on_hitbox_body_exited(body: Node2D) -> void:
 		
 func enemy_attack():
 	if enemy_in_attack_range and enemy_attack_cooldown == true:
-		health -= 20
+		health -= 5
 		enemy_attack_cooldown = false
 		$Attack_CD.start()
 		print(health)
@@ -104,3 +105,20 @@ func _on_deal_attack_cd_timeout() -> void:
 	$Deal_Attack_CD.stop()
 	Main.player_current_attack = false
 	attack_in_progress = false
+	
+func update_health():
+	var healthbar = $health_bar
+	healthbar.value = health
+	
+	if health >= 100:
+		healthbar.visible = false
+	else:
+		healthbar.visible = true
+
+func _on_regen_timer_timeout() -> void:
+	if 0 < health < 100:
+		health += 20
+		if health > 100:
+			health = 100
+	if health <= 0:
+		health = 0

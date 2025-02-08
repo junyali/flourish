@@ -10,6 +10,7 @@ var can_take_damage = true
 
 func _physics_process(delta: float) -> void:
 	deal_with_damage()
+	update_health()
 	
 	if PLAYER_CHASE:
 		if position.distance_to(PLAYER.position) > 10:
@@ -63,3 +64,7 @@ func _on_animated_sprite_2d_animation_finished() -> void:
 
 func _on_iframe_timeout() -> void:
 	can_take_damage = true
+	
+func update_health():
+	var healthbar = $health_bar
+	healthbar.value = health
