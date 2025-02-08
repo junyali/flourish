@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=4 uid="uid://weggdeh7ow3e"]
+[gd_scene load_steps=5 format=4 uid="uid://weggdeh7ow3e"]
 
 [ext_resource type="TileSet" uid="uid://bsc561euduobk" path="res://assets/tilemap.tres" id="1_kf0c5"]
 [ext_resource type="PackedScene" uid="uid://b0wfwegu6kl41" path="res://scenes/player.tscn" id="2_fws7e"]
 [ext_resource type="PackedScene" uid="uid://cinitpgfbcpae" path="res://scenes/slime.tscn" id="3_qk1cr"]
+[ext_resource type="PackedScene" uid="uid://cah2kesntw36e" path="res://scenes/skeleton.tscn" id="4_wge4b"]
 
 [node name="world" type="Node2D"]
 y_sort_enabled = true
@@ -21,3 +22,6 @@ position = Vector2(274, 220)
 
 [node name="slime" parent="." instance=ExtResource("3_qk1cr")]
 position = Vector2(480, 312)
+
+[node name="skeleton" parent="." instance=ExtResource("4_wge4b")]
+position = Vector2(379, 344)
