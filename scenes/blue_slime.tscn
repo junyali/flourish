@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://cdi7unxt4dpg4"]
+
+[ext_resource type="PackedScene" uid="uid://cep5mlas82ph2" path="res://scenes/enemy.tscn" id="1_rn5dg"]
+[ext_resource type="SpriteFrames" uid="uid://cckr38int28mg" path="res://assets/spriteframes/blue_slime.tres" id="2_gcmlm"]
+[ext_resource type="Script" path="res://scripts/blue_slime.gd" id="2_n4m6p"]
+
+[node name="blue_slime" instance=ExtResource("1_rn5dg")]
+script = ExtResource("2_n4m6p")
+
+[node name="sprite" parent="." index="0"]
+sprite_frames = ExtResource("2_gcmlm")
+animation = &"front_idle"
+
+[node name="hitbox" parent="." index="2"]
+position = Vector2(0, 5)
+
+[node name="shape" parent="." index="3"]
+position = Vector2(0, 2)
