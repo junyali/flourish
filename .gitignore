@@ -3,5 +3,5 @@
 /android/
 
 # Private
-brainstorming/
-art/
+./brainstorming/*
+./art/*
