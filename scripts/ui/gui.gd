@@ -3,19 +3,31 @@ extends CanvasLayer
 # UI Variables
 var effect_progress_bars = {}
 
+# Inventory Dragging
+var dragging_item = null
+var drag_offset = Vector2.ZERO
+var drag_node = null
+
+
 # Node References
 @onready var player = get_tree().get_first_node_in_group("player")
-@onready var heart_container = $TopLeftCorner/StatContainer/HeartContainer
-@onready var prot_container = $TopLeftCorner/StatContainer/ProtContainer
-@onready var cooldown_container = $TopLeftCorner/StatContainer/CooldownContainer
-@onready var effect_container = $TopLeftCorner/EffectContainer
+@onready var heart_container = $HUD/TopLeftCorner/StatContainer/HeartContainer
+@onready var prot_container = $HUD/TopLeftCorner/StatContainer/ProtContainer
+@onready var cooldown_container = $HUD/TopLeftCorner/StatContainer/CooldownContainer
+@onready var effect_container = $HUD/TopLeftCorner/EffectContainer
+@onready var inventory_ui = $Inventory
+@onready var inventory_grid = $Inventory/TextureRect/GridContainer
 
 func _ready() -> void:
-	pass
+	inventory_ui.visible = false
 
 func _process(delta: float) -> void:
 	if Global.Player:
 		update_stat_display(delta)
+	if Input.is_action_just_pressed("ui_inventory"):
+		toggle_inventory()
+	if dragging_item and drag_node:
+		drag_node.position = get_viewport().get_global_mouse_position() + drag_offset
 	
 func update_stat_display(delta: float) -> void:
 	var current_hp = Global.Player.current_health
@@ -102,4 +114,47 @@ func update_stat_display(delta: float) -> void:
 			effect_progress_bars[effect_name].queue_free()
 			effect_progress_bars.erase(effect_name)
 		
-	
+func toggle_inventory() -> void:
+	inventory_ui.visible = not inventory_ui.visible
+	if inventory_ui.visible:
+		# Debug code
+		var dir_path = "res://art/gui/items"
+		var dir = DirAccess.open(dir_path)
+		var item_list = dir.get_files()
+		var count = 0
+		for item in item_list:
+			if item.contains("import"):
+				item_list.remove_at(count)
+			count += 1
+		
+		var ran = item_list[randi() % item_list.size()].replace(".png", "")
+		var n = randi() % 8 + 1
+		print(ran, n)
+		
+		GlobalInventory.add_item(ran, n)
+		# End debug
+		populate_inventory()
+	else:
+		clear_inventory()
+		
+func populate_inventory() -> void:
+	for index in range(GlobalInventory.INVENTORY_SIZE):
+		var item = GlobalInventory.items[index]
+		var cell = inventory_grid.get_child(index)
+		if item:
+			cell.set_item(item)
+			
+func clear_inventory() -> void:
+	for cell in inventory_grid.get_children():
+		cell.clear_item()
+		
+func start_drag(cell) -> void:
+	dragging_item = cell.item_texture
+	drag_offset = cell.get_local_mouse_position()
+
+	drag_node = TextureRect.new()
+	drag_node.texture = dragging_item
+	drag_node.rect_min_size = cell.rect_min_size
+	add_child(drag_node)
+
+	drag_node.position = get_viewport().get_global_mouse_position() + drag_offset
