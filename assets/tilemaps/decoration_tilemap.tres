@@ -1,0 +1,71 @@
+[gd_resource type="TileSet" load_steps=9 format=3 uid="uid://qs3ii20qagjp"]
+
+[ext_resource type="Texture2D" uid="uid://cwycw0niwr1tf" path="res://art/tiles/land/decor_16x16.png" id="1_2ae2m"]
+[ext_resource type="Texture2D" uid="uid://cm7xgk5ufc7l" path="res://art/tiles/land/water_decorations.png" id="2_tjuu7"]
+[ext_resource type="Texture2D" uid="uid://r7rss0e7gs7n" path="res://art/tiles/land/water_lillies.png" id="3_ullsm"]
+[ext_resource type="Texture2D" uid="uid://deq5y1b1w3t47" path="res://art/tiles/objects/rock_in_water_01-sheet.png" id="4_14mbx"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rl5p4"]
+resource_name = "grass_decor"
+texture = ExtResource("1_2ae2m")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_c8d2s"]
+resource_name = "water_decor"
+texture = ExtResource("2_tjuu7")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nemb0"]
+resource_name = "water_lillies"
+texture = ExtResource("3_ullsm")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lxrop"]
+texture = ExtResource("4_14mbx")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+
+[resource]
+sources/0 = SubResource("TileSetAtlasSource_rl5p4")
+sources/1 = SubResource("TileSetAtlasSource_c8d2s")
+sources/2 = SubResource("TileSetAtlasSource_nemb0")
+sources/3 = SubResource("TileSetAtlasSource_lxrop")

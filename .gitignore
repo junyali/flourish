@@ -5,5 +5,10 @@
 # Private
 ./brainstorming/*
 /brainstorming
-./art/*
-/art
+art/*
+
+# IDE Settings
+.idea/*
+
+# Builds / Binary files
+builds/*

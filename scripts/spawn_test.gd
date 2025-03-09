@@ -1,13 +1,9 @@
 extends Node2D
 
-var blue_slime = preload("res://scenes/blue_slime.tscn")
-var green_slime = preload("res://scenes/green_slime.tscn")
-var angry_bones = preload("res://scenes/angry_bones.tscn")
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	randomize()
-	while true:
+	while false:
 		var t = randf_range(1, 3)
 		var r = randi_range(1, 3)
 		await get_tree().create_timer(t).timeout
@@ -29,13 +25,6 @@ func _process(delta: float) -> void:
 	
 func spawn_enemy(enemy_type: String, position: Vector2):
 	var enemy
-	match enemy_type:
-		"blue_slime":
-			enemy = blue_slime.instantiate()
-		"green_slime":
-			enemy = green_slime.instantiate()
-		"angry_bones":
-			enemy = angry_bones.instantiate()
 	if enemy:
 		enemy.global_position = position
 		get_parent().add_child(enemy)

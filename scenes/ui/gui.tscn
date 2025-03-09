@@ -1,0 +1,115 @@
+[gd_scene load_steps=8 format=3 uid="uid://b7w7djcde0apj"]
+
+[ext_resource type="Script" path="res://scripts/gui.gd" id="1_ln8qm"]
+[ext_resource type="Texture2D" uid="uid://c80c87tjnqx6e" path="res://art/gui/hud/heart_base.png" id="2_1rjc3"]
+[ext_resource type="Texture2D" uid="uid://q3tnncfi1mab" path="res://art/gui/hud/heart_shrink.png" id="3_fsdul"]
+[ext_resource type="Texture2D" uid="uid://4ipmkgneqcdd" path="res://art/gui/hud/sprint.png" id="4_21sca"]
+[ext_resource type="Texture2D" uid="uid://dhywxck57k65a" path="res://art/gui/hud/shield.png" id="4_nopqo"]
+[ext_resource type="Texture2D" uid="uid://c4k261dmdck4d" path="res://art/gui/hud/dash.png" id="4_vnhth"]
+[ext_resource type="LabelSettings" uid="uid://mhc87885yvap" path="res://assets/labelsetting/flourish.tres" id="5_3gxne"]
+
+[node name="UICanvas" type="CanvasLayer"]
+script = ExtResource("1_ln8qm")
+
+[node name="TopLeftCorner" type="VBoxContainer" parent="."]
+offset_left = 8.0
+offset_top = 3.0
+offset_right = 418.0
+offset_bottom = 97.0
+theme_override_constants/separation = 0
+
+[node name="StatContainer" type="HBoxContainer" parent="TopLeftCorner"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="HeartContainer" type="HBoxContainer" parent="TopLeftCorner/StatContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_constants/separation = 2
+
+[node name="Heart1" type="TextureProgressBar" parent="TopLeftCorner/StatContainer/HeartContainer"]
+layout_mode = 2
+value = 100.0
+fill_mode = 5
+texture_under = ExtResource("2_1rjc3")
+texture_progress = ExtResource("3_fsdul")
+
+[node name="Heart2" type="TextureProgressBar" parent="TopLeftCorner/StatContainer/HeartContainer"]
+layout_mode = 2
+value = 100.0
+fill_mode = 5
+texture_under = ExtResource("2_1rjc3")
+texture_progress = ExtResource("3_fsdul")
+
+[node name="Heart3" type="TextureProgressBar" parent="TopLeftCorner/StatContainer/HeartContainer"]
+layout_mode = 2
+value = 100.0
+fill_mode = 5
+texture_under = ExtResource("2_1rjc3")
+texture_progress = ExtResource("3_fsdul")
+
+[node name="Heart4" type="TextureProgressBar" parent="TopLeftCorner/StatContainer/HeartContainer"]
+layout_mode = 2
+value = 100.0
+fill_mode = 5
+texture_under = ExtResource("2_1rjc3")
+texture_progress = ExtResource("3_fsdul")
+
+[node name="Heart5" type="TextureProgressBar" parent="TopLeftCorner/StatContainer/HeartContainer"]
+layout_mode = 2
+value = 100.0
+fill_mode = 5
+texture_under = ExtResource("2_1rjc3")
+texture_progress = ExtResource("3_fsdul")
+
+[node name="ProtContainer" type="HBoxContainer" parent="TopLeftCorner/StatContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 0
+
+[node name="Shield" type="TextureRect" parent="TopLeftCorner/StatContainer/ProtContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+texture = ExtResource("4_nopqo")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="TopLeftCorner/StatContainer/ProtContainer/Shield"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12.0
+offset_top = -12.0
+offset_right = 12.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "27"
+label_settings = ExtResource("5_3gxne")
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[node name="CooldownContainer" type="HBoxContainer" parent="TopLeftCorner/StatContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Dash" type="TextureProgressBar" parent="TopLeftCorner/StatContainer/CooldownContainer"]
+layout_mode = 2
+fill_mode = 3
+texture_under = ExtResource("4_vnhth")
+texture_progress = ExtResource("4_vnhth")
+tint_progress = Color(0.2, 0.2, 0.2, 1)
+
+[node name="Sprint" type="TextureRect" parent="TopLeftCorner/StatContainer/CooldownContainer"]
+layout_mode = 2
+texture = ExtResource("4_21sca")
+stretch_mode = 3
+
+[node name="EffectContainer" type="HBoxContainer" parent="TopLeftCorner"]
+layout_mode = 2

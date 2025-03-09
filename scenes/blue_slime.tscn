@@ -1,18 +1,66 @@
-[gd_scene load_steps=4 format=3 uid="uid://cdi7unxt4dpg4"]
+[gd_scene load_steps=6 format=3 uid="uid://brsgr5f14fwso"]
 
-[ext_resource type="PackedScene" uid="uid://cep5mlas82ph2" path="res://scenes/enemy.tscn" id="1_rn5dg"]
-[ext_resource type="SpriteFrames" uid="uid://cckr38int28mg" path="res://assets/spriteframes/blue_slime.tres" id="2_gcmlm"]
+[ext_resource type="SpriteFrames" uid="uid://bwdyeyhga1q7n" path="res://assets/spriteframes/blue_slime.tres" id="2_gcmlm"]
 [ext_resource type="Script" path="res://scripts/blue_slime.gd" id="2_n4m6p"]
 
-[node name="blue_slime" instance=ExtResource("1_rn5dg")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_kfo70"]
+radius = 5.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bx13c"]
+radius = 14.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_538s4"]
+radius = 39.0128
+
+[node name="BlueSlime" type="CharacterBody2D"]
 script = ExtResource("2_n4m6p")
 
-[node name="sprite" parent="." index="0"]
+[node name="body_sprite" type="AnimatedSprite2D" parent="."]
+y_sort_enabled = true
+position = Vector2(0, -9)
 sprite_frames = ExtResource("2_gcmlm")
 animation = &"front_idle"
+frame_progress = 0.827277
 
-[node name="hitbox" parent="." index="2"]
-position = Vector2(0, 5)
+[node name="collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -6)
+shape = SubResource("CircleShape2D_kfo70")
 
-[node name="shape" parent="." index="3"]
-position = Vector2(0, 2)
+[node name="melee_attack_hitbox" type="Area2D" parent="."]
+monitoring = false
+
+[node name="hitbox_collision" type="CollisionShape2D" parent="melee_attack_hitbox"]
+position = Vector2(0, -6)
+shape = SubResource("CircleShape2D_bx13c")
+
+[node name="aggro" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="aggro"]
+position = Vector2(0, -6)
+shape = SubResource("CircleShape2D_538s4")
+
+[node name="iframe" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="attack_cd" type="Timer" parent="."]
+
+[node name="flash" type="Timer" parent="."]
+
+[node name="jump" type="Timer" parent="."]
+
+[node name="health_bar" type="ProgressBar" parent="."]
+modulate = Color(0.107092, 0.644964, 3.85046e-07, 1)
+offset_left = -6.0
+offset_top = 2.0
+offset_right = 110.0
+offset_bottom = 29.0
+scale = Vector2(0.1, 0.1)
+show_percentage = false
+
+[node name="regen_timer" type="Timer" parent="."]
+wait_time = 5.0
+
+[connection signal="body_entered" from="melee_attack_hitbox" to="." method="_on_melee_attack_hitbox_body_entered"]
+[connection signal="body_exited" from="melee_attack_hitbox" to="." method="_on_melee_attack_hitbox_body_exited"]
+[connection signal="body_entered" from="aggro" to="." method="_on_aggro_body_entered"]
+[connection signal="body_exited" from="aggro" to="." method="_on_aggro_body_exited"]
