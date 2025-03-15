@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://cmcldofji32u7"]
+
+[ext_resource type="PackedScene" uid="uid://wx1l0jc25qsr" path="res://scenes/entity/passive/passive.tscn" id="1_bxkpf"]
+[ext_resource type="Script" path="res://scripts/entity/passive/pig_b.gd" id="2_poamn"]
+[ext_resource type="SpriteFrames" uid="uid://c13w1dgde5fkd" path="res://assets/spriteframes/entity/passive/pig_b.tres" id="3_bc44n"]
+
+[node name="Pig_B" instance=ExtResource("1_bxkpf")]
+script = ExtResource("2_poamn")
+roam_speed = 40.0
+roam_interval = 3.0
+idle_chance = 0.2
+action_chance = 0.4
+panic_duration = 3.0
+
+[node name="Entity" parent="." index="0"]
+platform_floor_layers = 0
+
+[node name="Sprite" parent="Entity" index="0"]
+sprite_frames = ExtResource("3_bc44n")
+animation = &"death"
+frame = 3
+frame_progress = 1.0
+
+[node name="Roam" type="Timer" parent="Entity" index="6"]
+
+[node name="Panic" type="Timer" parent="Entity" index="7"]
+
+[connection signal="timeout" from="Entity/Roam" to="." method="_on_roam_timeout"]
+[connection signal="timeout" from="Entity/Panic" to="." method="_on_panic_timeout"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://weggdeh7ow3e"]
+[gd_scene load_steps=33 format=4 uid="uid://weggdeh7ow3e"]
 
 [ext_resource type="Script" path="res://scripts/spawn_test.gd" id="1_wfd2y"]
 [ext_resource type="PackedScene" uid="uid://b0wfwegu6kl41" path="res://scenes/player/player.tscn" id="2_fws7e"]
@@ -25,6 +25,13 @@
 [ext_resource type="PackedScene" uid="uid://djpfocfitas6i" path="res://scenes/resource/stump_b.tscn" id="23_xvos4"]
 [ext_resource type="PackedScene" uid="uid://cdo3bfkfdjkna" path="res://scenes/entity/passive/pig_a.tscn" id="24_xqaro"]
 [ext_resource type="PackedScene" uid="uid://cmcldofji32u7" path="res://scenes/entity/passive/pig_b.tscn" id="25_fej1x"]
+[ext_resource type="PackedScene" uid="uid://1syeqxdxdoju" path="res://scenes/entity/passive/pig_c.tscn" id="26_7m1xe"]
+[ext_resource type="PackedScene" uid="uid://ub7ndvc1cmxa" path="res://scenes/entity/passive/cow_a.tscn" id="27_tttfp"]
+[ext_resource type="PackedScene" uid="uid://cvap4ek07kjqk" path="res://scenes/entity/passive/cow_b.tscn" id="28_turb6"]
+[ext_resource type="PackedScene" uid="uid://cp1n1xtck5xfb" path="res://scenes/entity/passive/cow_c.tscn" id="29_qhkgo"]
+[ext_resource type="PackedScene" uid="uid://ceue6mgpscqc1" path="res://scenes/entity/passive/sheep_a.tscn" id="30_xrkab"]
+[ext_resource type="PackedScene" uid="uid://dpcg6j1yor2si" path="res://scenes/entity/passive/chicken_a.tscn" id="31_5sa12"]
+[ext_resource type="PackedScene" uid="uid://cgamh3rrlivab" path="res://scenes/entity/passive/chicken_b.tscn" id="32_ma1yb"]
 
 [node name="world" type="Node2D"]
 y_sort_enabled = true
@@ -169,3 +176,24 @@ position = Vector2(445, 263)
 
 [node name="Pig_B" parent="." instance=ExtResource("25_fej1x")]
 position = Vector2(442, 293)
+
+[node name="Pig_C" parent="." instance=ExtResource("26_7m1xe")]
+position = Vector2(451, 318)
+
+[node name="Cow_A" parent="." instance=ExtResource("27_tttfp")]
+position = Vector2(574, 310)
+
+[node name="Cow_B" parent="." instance=ExtResource("28_turb6")]
+position = Vector2(568, 343)
+
+[node name="Cow_C" parent="." instance=ExtResource("29_qhkgo")]
+position = Vector2(543, 319)
+
+[node name="Sheep" parent="." instance=ExtResource("30_xrkab")]
+position = Vector2(497, 322)
+
+[node name="Chicken_A" parent="." instance=ExtResource("31_5sa12")]
+position = Vector2(545, 219)
+
+[node name="Chicken_B" parent="." instance=ExtResource("32_ma1yb")]
+position = Vector2(569, 251)

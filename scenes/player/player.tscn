@@ -18,6 +18,7 @@ y_sort_enabled = true
 collision_layer = 3
 collision_mask = 3
 motion_mode = 1
+platform_floor_layers = 0
 
 [node name="Sprite" type="AnimatedSprite2D" parent="Body"]
 position = Vector2(0, -1)

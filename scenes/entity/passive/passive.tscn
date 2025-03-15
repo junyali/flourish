@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://wx1l0jc25qsr"]
+
+[ext_resource type="Script" path="res://scripts/entity/passive/passive.gd" id="1_246x0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_33137"]
+radius = 5.0
+
+[node name="Base_Entity" type="Node2D" groups=["entity"]]
+y_sort_enabled = true
+script = ExtResource("1_246x0")
+
+[node name="Entity" type="CharacterBody2D" parent="."]
+y_sort_enabled = true
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Entity"]
+y_sort_enabled = true
+animation = &""
+offset = Vector2(0, -6)
+
+[node name="Collision" type="CollisionShape2D" parent="Entity"]
+position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_33137")
+
+[node name="Healthbar" type="ProgressBar" parent="Entity"]
+modulate = Color(0.107092, 0.644964, 3.85046e-07, 1)
+offset_left = -6.0
+offset_top = 3.0
+offset_right = 110.0
+offset_bottom = 30.0
+scale = Vector2(0.1, 0.1)
+show_percentage = false
+
+[node name="Iframe" type="Timer" parent="Entity"]
+wait_time = 0.5
+one_shot = true
+
+[node name="Flash" type="Timer" parent="Entity"]
+one_shot = true
+
+[node name="Regen" type="Timer" parent="Entity"]
+
+[connection signal="timeout" from="Entity/Iframe" to="." method="_on_iframe_timeout"]
+[connection signal="timeout" from="Entity/Flash" to="." method="_on_flash_timeout"]
+[connection signal="timeout" from="Entity/Regen" to="." method="_on_regen_timeout"]
