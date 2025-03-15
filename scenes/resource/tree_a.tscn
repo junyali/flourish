@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://dtocafxadatho"]
+
+[ext_resource type="PackedScene" uid="uid://sxirtwtlgvr4" path="res://scenes/resource/resource.tscn" id="1_053mr"]
+[ext_resource type="Script" path="res://scripts/resource/tree_a.gd" id="2_51may"]
+[ext_resource type="Texture2D" uid="uid://c7ohl8sqobilw" path="res://art/object/resource/tree_a.png" id="3_1hf8i"]
+
+[node name="Tree_A" instance=ExtResource("1_053mr")]
+script = ExtResource("2_51may")
+
+[node name="Resource" parent="." index="0"]
+position = Vector2(0, 0)
+
+[node name="Sprite" parent="Resource" index="0"]
+texture = ExtResource("3_1hf8i")
+offset = Vector2(0, -26)
+
+[node name="Collision" parent="Resource" index="1"]
+polygon = PackedVector2Array(-10, 13, -10, 14, -11, 14, -11, 15, -12, 15, -12, 18, -11, 18, -11, 19, -12, 19, -12, 23, -7, 23, -7, 26, 0, 26, 0, 25, 3, 25, 3, 26, 10, 26, 10, 23, 9, 23, 9, 22, 12, 22, 12, 18, 11, 18, 11, 17, 10, 17, 10, 16, 9, 16, 9, 14, 8, 14, 8, 12, 6, 12, 6, 13, 0, 13, 0, 14, -5, 14, -5, 13)

@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://dbc5r3jkqybv4"]
+
+[ext_resource type="Script" path="res://scripts/resource/bush_b.gd" id="1_2785n"]
+[ext_resource type="Texture2D" uid="uid://cbwov3aobfb48" path="res://art/object/resource/bush_b.png" id="2_fxiaa"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5xslu"]
+radius = 66.3099
+
+[node name="Bush_B" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_2785n")
+
+[node name="Resource" type="StaticBody2D" parent="." groups=["resource"]]
+
+[node name="Sprite" type="Sprite2D" parent="Resource"]
+texture = ExtResource("2_fxiaa")
+offset = Vector2(0, -22)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Resource"]
+polygon = PackedVector2Array(-6, -5, -6, -2, -5, -2, -5, -1, -2, -1, -2, 0, 2, 0, 2, -1, 5, -1, 5, -2, 6, -2, 6, -5, 0, -5, 0, -6, -1, -6, -1, -5, -2, -5)
+
+[node name="CueArea" type="Area2D" parent="Resource"]
+
+[node name="Detect" type="CollisionShape2D" parent="Resource/CueArea"]
+shape = SubResource("CircleShape2D_5xslu")
+
+[connection signal="body_entered" from="Resource/CueArea" to="." method="_on_cue_area_body_entered"]
+[connection signal="body_exited" from="Resource/CueArea" to="." method="_on_cue_area_body_exited"]

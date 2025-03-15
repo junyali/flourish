@@ -1,46 +1,53 @@
 [gd_scene load_steps=5 format=3 uid="uid://b0wfwegu6kl41"]
 
-[ext_resource type="Script" path="res://scripts/player.gd" id="1_iqjej"]
+[ext_resource type="Script" path="res://scripts/player/player.gd" id="1_lvs3r"]
 [ext_resource type="SpriteFrames" uid="uid://brqchxp3sc208" path="res://assets/spriteframes/player_body.tres" id="2_ipv2i"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kxhnw"]
 radius = 4.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3dhac"]
-radius = 11.0454
+radius = 15.0
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_lvs3r")
+
+[node name="Body" type="CharacterBody2D" parent="."]
+y_sort_enabled = true
 collision_layer = 3
+collision_mask = 3
 motion_mode = 1
-script = ExtResource("1_iqjej")
 
-[node name="body_sprite" type="AnimatedSprite2D" parent="."]
+[node name="Sprite" type="AnimatedSprite2D" parent="Body"]
+position = Vector2(0, -1)
 sprite_frames = ExtResource("2_ipv2i")
 animation = &"front_attack"
 offset = Vector2(0, -16)
 
-[node name="collision" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="Body"]
 y_sort_enabled = true
-position = Vector2(0, -3)
+position = Vector2(0, -4)
 shape = SubResource("CircleShape2D_kxhnw")
 
-[node name="melee_attack_hitbox" type="Area2D" parent="."]
-monitoring = false
+[node name="Range" type="Area2D" parent="Body"]
 
-[node name="hitbox_collision" type="CollisionShape2D" parent="melee_attack_hitbox"]
+[node name="Hitbox" type="CollisionShape2D" parent="Body/Range"]
 position = Vector2(0, -8)
 shape = SubResource("CircleShape2D_3dhac")
 
-[node name="iframe" type="Timer" parent="."]
+[node name="Iframe" type="Timer" parent="Body"]
 wait_time = 0.5
 
-[node name="attack_cd" type="Timer" parent="."]
+[node name="Flash" type="Timer" parent="Body"]
 
-[node name="movement_ability_cd" type="Timer" parent="."]
+[node name="Attack" type="Timer" parent="Body"]
 
-[node name="flash" type="Timer" parent="."]
+[node name="Regen" type="Timer" parent="Body"]
 
-[node name="camera" type="Camera2D" parent="."]
+[node name="Movement" type="Timer" parent="Body"]
+
+[node name="Camera" type="Camera2D" parent="Body"]
 limit_left = 0
 limit_top = 0
 limit_right = 9264
@@ -55,12 +62,10 @@ drag_top_margin = 0.1
 drag_right_margin = 0.1
 drag_bottom_margin = 0.1
 
-[node name="regen_timer" type="Timer" parent="."]
-
-[connection signal="body_entered" from="melee_attack_hitbox" to="." method="_on_hitbox_body_entered"]
-[connection signal="body_exited" from="melee_attack_hitbox" to="." method="_on_hitbox_body_exited"]
-[connection signal="timeout" from="iframe" to="." method="_on_iframe_timeout"]
-[connection signal="timeout" from="attack_cd" to="." method="_on_attack_cd_timeout"]
-[connection signal="timeout" from="movement_ability_cd" to="." method="_on_movement_ability_cd_timeout"]
-[connection signal="timeout" from="flash" to="." method="_on_flash_timeout"]
-[connection signal="timeout" from="regen_timer" to="." method="_on_regen_timer_timeout"]
+[connection signal="body_entered" from="Body/Range" to="Body" method="_on_hitbox_body_entered"]
+[connection signal="body_exited" from="Body/Range" to="Body" method="_on_hitbox_body_exited"]
+[connection signal="timeout" from="Body/Iframe" to="." method="_on_iframe_timeout"]
+[connection signal="timeout" from="Body/Flash" to="." method="_on_flash_timeout"]
+[connection signal="timeout" from="Body/Attack" to="." method="_on_attack_timeout"]
+[connection signal="timeout" from="Body/Regen" to="." method="_on_regen_timeout"]
+[connection signal="timeout" from="Body/Movement" to="." method="_on_movement_timeout"]

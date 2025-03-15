@@ -17,6 +17,10 @@ var drag_node = null
 @onready var effect_container = $HUD/TopLeftCorner/EffectContainer
 @onready var inventory_ui = $Inventory
 @onready var inventory_grid = $Inventory/TextureRect/GridContainer
+@onready var controls_ui = $Controls
+@onready var controls_list = $Controls/ControlsList
+
+var available_controls = {}
 
 func _ready() -> void:
 	inventory_ui.visible = false
@@ -24,10 +28,32 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if Global.Player:
 		update_stat_display(delta)
+		update_inventory()
+		check_controls()
 	if Input.is_action_just_pressed("ui_inventory"):
 		toggle_inventory()
 	if dragging_item and drag_node:
 		drag_node.position = get_viewport().get_global_mouse_position() + drag_offset
+		
+func check_controls() -> void:
+	if Global.Player.can_dash:
+		set_control("dash", "characters", Rect2(0, 64, 16, 16))
+	else:
+		remove_control("dash")
+	
+	var can_harvest: bool = false
+	for body in Global.Player.attack_area.get_overlapping_bodies():
+		if body.is_in_group("resource"):
+			can_harvest = true
+			break
+	if can_harvest:
+		set_control("harvest", "characters", Rect2(64, 32, 16, 16))
+	else:
+		remove_control("harvest")
+		
+	set_control("attack", "characters", Rect2(64, 32, 16, 16))
+	set_control("backpack", "characters", Rect2(16, 32, 16, 16))
+	set_control("sprint", "extras", Rect2(0, 16, 32, 16))
 	
 func update_stat_display(delta: float) -> void:
 	var current_hp = Global.Player.current_health
@@ -35,6 +61,7 @@ func update_stat_display(delta: float) -> void:
 	var shield = Global.Player.shield
 	var is_sprinting = Global.Player.is_sprinting
 	var movement_ability_cd = Global.Player.movement_timer.time_left / Global.Player.movement_timer.wait_time if not Global.Player.can_dash else 0
+	var attack_timer_cd = Global.Player.attack_timer.time_left / Global.Player.attack_timer.wait_time if Global.Player.is_attacking else 0
 	
 	var hp_per_heart = max_hp / heart_container.get_child_count()
 	var hearts = heart_container.get_children()
@@ -54,6 +81,12 @@ func update_stat_display(delta: float) -> void:
 	else:
 		cooldown_container.get_node("Dash").value = lerp(15, 75, movement_ability_cd)
 		cooldown_container.get_node("Dash").visible = true
+		
+	if attack_timer_cd <= 0:
+		cooldown_container.get_node("Attack").visible = false
+	else:
+		cooldown_container.get_node("Attack").value = lerp(15, 75, attack_timer_cd)
+		cooldown_container.get_node("Attack").visible = true
 		
 	cooldown_container.queue_sort()
 	
@@ -144,6 +177,17 @@ func populate_inventory() -> void:
 		if item:
 			cell.set_item(item)
 			
+func update_inventory() -> void:
+	for index in range(GlobalInventory.INVENTORY_SIZE):
+		var item = GlobalInventory.items[index]
+		var cell = inventory_grid.get_child(index)
+
+		if item:
+			if cell.item_id != item.item_id or cell.count != item.quantity:
+				cell.set_item(item)
+		else:
+			cell.clear_item()
+			
 func clear_inventory() -> void:
 	for cell in inventory_grid.get_children():
 		cell.clear_item()
@@ -158,3 +202,45 @@ func start_drag(cell) -> void:
 	add_child(drag_node)
 
 	drag_node.position = get_viewport().get_global_mouse_position() + drag_offset
+	
+func update_controls_ui():
+	var existing_controls = {}
+	for child in controls_list.get_children():
+		existing_controls[child.name] = child
+		
+	for action_name in available_controls.keys():
+		if action_name in existing_controls:
+			var control_ui = existing_controls[action_name]
+			var control_data = available_controls[action_name]
+			var control_atlas = AtlasTexture.new()
+			control_ui.get_node("action").texture = control_data["action_icon"]
+			control_atlas.atlas = control_data["key_icon"]
+			control_atlas.region = control_data["key_atlas"]
+			control_ui.get_node("key").texture = control_atlas
+		else:
+			var control_data = available_controls[action_name]
+			var control_ui = preload("res://assets/ui/control_group.tscn").instantiate()
+			var control_atlas = AtlasTexture.new()
+			control_ui.name = action_name
+			control_ui.get_node("action").texture = control_data["action_icon"]
+			control_atlas.atlas = control_data["key_icon"]
+			control_atlas.region = control_data["key_atlas"]
+			control_ui.get_node("key").texture = control_atlas
+			controls_list.add_child(control_ui)
+			
+	for action_name in existing_controls.keys():
+		if action_name not in available_controls:
+			existing_controls[action_name].queue_free()
+	
+func set_control(action: String, key_icon: String, key_atlas: Rect2):
+	available_controls[action] = {
+		"action_icon": load("res://art/gui/controls/" + action + ".png"),
+		"key_icon": load("res://art/gui/controls/keyboard_" + key_icon + ".png"),
+		"key_atlas": key_atlas
+	}
+	update_controls_ui()
+	
+func remove_control(action: String):
+	if available_controls.has(action):
+		available_controls.erase(action)
+		update_controls_ui()

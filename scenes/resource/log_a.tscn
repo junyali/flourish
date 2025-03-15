@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://cpu1ke2vvulww"]
+
+[ext_resource type="Script" path="res://scripts/resource/log_a.gd" id="1_lap4p"]
+[ext_resource type="Texture2D" uid="uid://dllcm7pq5dpi6" path="res://art/object/resource/log_a.png" id="2_6pixg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5xslu"]
+radius = 66.3099
+
+[node name="Log_A" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_lap4p")
+
+[node name="Resource" type="StaticBody2D" parent="." groups=["resource"]]
+
+[node name="Sprite" type="Sprite2D" parent="Resource"]
+texture = ExtResource("2_6pixg")
+offset = Vector2(0, -6)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Resource"]
+polygon = PackedVector2Array(-15, -7, 13, -7, 13, -4, 12, -4, 12, -2, 11, -2, 11, -1, 4, -1, 4, 0, -13, 0, -13, -1, -14, -1, -14, -3, -15, -3)
+
+[node name="CueArea" type="Area2D" parent="Resource"]
+
+[node name="Detect" type="CollisionShape2D" parent="Resource/CueArea"]
+shape = SubResource("CircleShape2D_5xslu")
+
+[connection signal="body_entered" from="Resource/CueArea" to="." method="_on_cue_area_body_entered"]
+[connection signal="body_exited" from="Resource/CueArea" to="." method="_on_cue_area_body_exited"]

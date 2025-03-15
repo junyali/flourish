@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://38xbvy544vsw"]
+
+[ext_resource type="Script" path="res://scripts/resource/rock_deposit_a.gd" id="1_bqrm8"]
+[ext_resource type="Texture2D" uid="uid://bc2epouia3jv4" path="res://art/object/resource/rock_deposit_a.png" id="2_vr8xj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5xslu"]
+radius = 66.3099
+
+[node name="Rock_Deposit_A" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_bqrm8")
+
+[node name="Resource" type="StaticBody2D" parent="." groups=["resource"]]
+
+[node name="Sprite" type="Sprite2D" parent="Resource"]
+texture = ExtResource("2_vr8xj")
+offset = Vector2(0, -7)
+
+[node name="Collision" type="CollisionPolygon2D" parent="Resource"]
+position = Vector2(0, -26)
+polygon = PackedVector2Array(-8, 19, -8, 22, -7, 22, -7, 23, -6, 23, -6, 24, -3, 24, -3, 25, -1, 25, -1, 26, 3, 26, 3, 25, 5, 25, 5, 24, 6, 24, 6, 23, 7, 23, 7, 17, -6, 17, -6, 18, -7, 18, -7, 19)
+
+[node name="CueArea" type="Area2D" parent="Resource"]
+
+[node name="Detect" type="CollisionShape2D" parent="Resource/CueArea"]
+shape = SubResource("CircleShape2D_5xslu")
+
+[connection signal="body_entered" from="Resource/CueArea" to="." method="_on_cue_area_body_entered"]
+[connection signal="body_exited" from="Resource/CueArea" to="." method="_on_cue_area_body_exited"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b7w7djcde0apj"]
+[gd_scene load_steps=12 format=3 uid="uid://b7w7djcde0apj"]
 
 [ext_resource type="Script" path="res://scripts/ui/gui.gd" id="1_ln8qm"]
 [ext_resource type="Texture2D" uid="uid://c80c87tjnqx6e" path="res://art/gui/hud/heart_base.png" id="2_1rjc3"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dhywxck57k65a" path="res://art/gui/hud/shield.png" id="4_nopqo"]
 [ext_resource type="Texture2D" uid="uid://c4k261dmdck4d" path="res://art/gui/hud/dash.png" id="4_vnhth"]
 [ext_resource type="LabelSettings" uid="uid://bcfw3md0m1ndf" path="res://assets/labelsetting/inventory.tres" id="5_3t0du"]
+[ext_resource type="Texture2D" uid="uid://uax1uahljq4m" path="res://art/gui/hud/attack.png" id="8_r7mev"]
 [ext_resource type="Texture2D" uid="uid://rrsh5clhh8rk" path="res://art/gui/inventory/inventory_4x4.png" id="8_s3opl"]
 [ext_resource type="Texture2D" uid="uid://cmjo2sbb05uwq" path="res://art/gui/inventory/inventory_cell_bare.png" id="9_gnitr"]
 [ext_resource type="Script" path="res://scripts/ui/inventory_slot.gd" id="10_lelqn"]
@@ -124,6 +125,13 @@ tint_progress = Color(0.2, 0.2, 0.2, 1)
 layout_mode = 2
 texture = ExtResource("4_21sca")
 stretch_mode = 3
+
+[node name="Attack" type="TextureProgressBar" parent="HUD/TopLeftCorner/StatContainer/CooldownContainer"]
+layout_mode = 2
+fill_mode = 3
+texture_under = ExtResource("8_r7mev")
+texture_progress = ExtResource("8_r7mev")
+tint_progress = Color(0.2, 0.2, 0.2, 1)
 
 [node name="EffectContainer" type="HBoxContainer" parent="HUD/TopLeftCorner"]
 layout_mode = 2
@@ -666,3 +674,26 @@ label_settings = ExtResource("5_3t0du")
 horizontal_alignment = 2
 vertical_alignment = 1
 clip_text = true
+
+[node name="Controls" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ControlsList" type="HBoxContainer" parent="Controls"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -196.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = -16
+alignment = 2

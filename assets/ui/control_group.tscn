@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://bicyt6k173vnd"]
+
+[ext_resource type="Texture2D" uid="uid://qtgk0irw7pcu" path="res://art/gui/controls/attack.png" id="1_xsp4i"]
+[ext_resource type="Texture2D" uid="uid://43mssrc3gqn2" path="res://assets/texture/atlas/keyboard_characters.tres" id="2_vmc87"]
+
+[node name="control" type="HBoxContainer"]
+custom_minimum_size = Vector2(16, 16)
+theme_override_constants/separation = -24
+
+[node name="action" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+texture = ExtResource("1_xsp4i")
+expand_mode = 2
+stretch_mode = 3
+
+[node name="key" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+texture = ExtResource("2_vmc87")
+expand_mode = 2
+stretch_mode = 3

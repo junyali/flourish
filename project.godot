@@ -17,6 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+Groups="*res://scripts/groups.gd"
 Global="*res://scripts/global.gd"
 Gui="*res://scenes/ui/gui.tscn"
 GlobalInventory="*res://scripts/inventory.gd"
