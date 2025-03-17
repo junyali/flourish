@@ -1,8 +1,9 @@
-[gd_scene load_steps=37 format=3 uid="uid://ub7ndvc1cmxa"]
+[gd_scene load_steps=38 format=3 uid="uid://ub7ndvc1cmxa"]
 
 [ext_resource type="PackedScene" uid="uid://wx1l0jc25qsr" path="res://scenes/entity/passive/passive.tscn" id="1_0i6hj"]
 [ext_resource type="Script" path="res://scripts/entity/passive/cow_a.gd" id="2_ngjcn"]
 [ext_resource type="Texture2D" uid="uid://dnc03x2w04utg" path="res://art/entity/passive/cow_a.png" id="3_eg7ap"]
+[ext_resource type="AudioStream" uid="uid://d3gm0k0bmmkqg" path="res://sfx/entity/passive/cow_moo_1.wav" id="4_7gdjt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hd3kk"]
 atlas = ExtResource("3_eg7ap")
@@ -264,17 +265,18 @@ idle_chance = 0.2
 action_chance = 0.4
 panic_duration = 3.0
 
-[node name="Entity" parent="." index="0"]
-platform_floor_layers = 0
-
-[node name="Sprite" parent="Entity" index="0"]
+[node name="Sprite" parent="." index="0"]
 sprite_frames = SubResource("SpriteFrames_smyhm")
 animation = &"death"
 offset = Vector2(0, -9)
 
-[node name="Roam" type="Timer" parent="Entity" index="6"]
+[node name="Roam" type="Timer" parent="." index="6"]
 
-[node name="Panic" type="Timer" parent="Entity" index="7"]
+[node name="Panic" type="Timer" parent="." index="7"]
 
-[connection signal="timeout" from="Entity/Roam" to="." method="_on_roam_timeout"]
-[connection signal="timeout" from="Entity/Panic" to="." method="_on_panic_timeout"]
+[node name="Sound" parent="." index="8"]
+stream = ExtResource("4_7gdjt")
+max_distance = 100.0
+
+[connection signal="timeout" from="Roam" to="." method="_on_roam_timeout"]
+[connection signal="timeout" from="Panic" to="." method="_on_panic_timeout"]

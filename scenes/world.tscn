@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=4 uid="uid://weggdeh7ow3e"]
+[gd_scene load_steps=35 format=4 uid="uid://weggdeh7ow3e"]
 
 [ext_resource type="Script" path="res://scripts/spawn_test.gd" id="1_wfd2y"]
 [ext_resource type="PackedScene" uid="uid://b0wfwegu6kl41" path="res://scenes/player/player.tscn" id="2_fws7e"]
@@ -11,18 +11,18 @@
 [ext_resource type="PackedScene" uid="uid://b5vdmpgmkj171" path="res://scenes/resource/tree_b.tscn" id="9_m4sah"]
 [ext_resource type="PackedScene" uid="uid://dv0lna8whdr8n" path="res://scenes/resource/tree_extra_a.tscn" id="10_3gja4"]
 [ext_resource type="PackedScene" uid="uid://642vroxjuv5i" path="res://scenes/resource/tree_extra_b.tscn" id="11_at0uo"]
-[ext_resource type="PackedScene" uid="uid://38xbvy544vsw" path="res://scenes/resource/rock_deposit_a.tscn" id="12_nkxoh"]
-[ext_resource type="PackedScene" uid="uid://cthu8tqqdwqgo" path="res://scenes/resource/rock_deposit_b.tscn" id="13_redun"]
-[ext_resource type="PackedScene" uid="uid://11nrvdphoqws" path="res://scenes/resource/rock_deposit_c.tscn" id="14_r1fiv"]
-[ext_resource type="PackedScene" uid="uid://bvtduhr74a5b6" path="res://scenes/resource/bush_a.tscn" id="15_s5nxs"]
-[ext_resource type="PackedScene" uid="uid://dbc5r3jkqybv4" path="res://scenes/resource/bush_b.tscn" id="16_7aap7"]
-[ext_resource type="PackedScene" uid="uid://cpu1ke2vvulww" path="res://scenes/resource/log_a.tscn" id="17_vop6l"]
-[ext_resource type="PackedScene" uid="uid://d0uppdq68pdes" path="res://scenes/resource/log_b.tscn" id="18_ffunx"]
-[ext_resource type="PackedScene" uid="uid://2flimkn545vp" path="res://scenes/resource/log_c.tscn" id="19_gr71f"]
-[ext_resource type="PackedScene" uid="uid://cwetjxci72yyo" path="res://scenes/resource/sapling_a.tscn" id="20_aaurf"]
-[ext_resource type="PackedScene" uid="uid://4chg4e75rtue" path="res://scenes/resource/sapling_b.tscn" id="21_n842s"]
-[ext_resource type="PackedScene" uid="uid://bq03ojw7f8e3n" path="res://scenes/resource/stump_a.tscn" id="22_a1uyb"]
-[ext_resource type="PackedScene" uid="uid://djpfocfitas6i" path="res://scenes/resource/stump_b.tscn" id="23_xvos4"]
+[ext_resource type="PackedScene" uid="uid://dkmyr5akw3yd3" path="res://scenes/resource/rock_deposit_a.tscn" id="12_nkxoh"]
+[ext_resource type="PackedScene" uid="uid://bvvb82drslsgi" path="res://scenes/resource/rock_deposit_b.tscn" id="13_redun"]
+[ext_resource type="PackedScene" uid="uid://dpqh0feimgvyg" path="res://scenes/resource/rock_deposit_c.tscn" id="14_r1fiv"]
+[ext_resource type="PackedScene" uid="uid://cyufeemy82kne" path="res://scenes/resource/bush_a.tscn" id="15_s5nxs"]
+[ext_resource type="PackedScene" uid="uid://du0hwiepl7iaa" path="res://scenes/resource/bush_b.tscn" id="16_7aap7"]
+[ext_resource type="PackedScene" uid="uid://cwui4d0fh6e5m" path="res://scenes/resource/log_a.tscn" id="17_vop6l"]
+[ext_resource type="PackedScene" uid="uid://dg3xtvvcii33i" path="res://scenes/resource/log_b.tscn" id="18_ffunx"]
+[ext_resource type="PackedScene" uid="uid://demxu85ybilb" path="res://scenes/resource/log_c.tscn" id="19_gr71f"]
+[ext_resource type="PackedScene" uid="uid://dkeb86uhyoy6r" path="res://scenes/resource/sapling_a.tscn" id="20_aaurf"]
+[ext_resource type="PackedScene" uid="uid://b1o6hc7dt7jlk" path="res://scenes/resource/sapling_b.tscn" id="21_n842s"]
+[ext_resource type="PackedScene" uid="uid://c8tql01c7jtyc" path="res://scenes/resource/stump_a.tscn" id="22_a1uyb"]
+[ext_resource type="PackedScene" uid="uid://vfc8gsf4te8" path="res://scenes/resource/stump_b.tscn" id="23_xvos4"]
 [ext_resource type="PackedScene" uid="uid://cdo3bfkfdjkna" path="res://scenes/entity/passive/pig_a.tscn" id="24_xqaro"]
 [ext_resource type="PackedScene" uid="uid://cmcldofji32u7" path="res://scenes/entity/passive/pig_b.tscn" id="25_fej1x"]
 [ext_resource type="PackedScene" uid="uid://1syeqxdxdoju" path="res://scenes/entity/passive/pig_c.tscn" id="26_7m1xe"]
@@ -32,10 +32,20 @@
 [ext_resource type="PackedScene" uid="uid://ceue6mgpscqc1" path="res://scenes/entity/passive/sheep_a.tscn" id="30_xrkab"]
 [ext_resource type="PackedScene" uid="uid://dpcg6j1yor2si" path="res://scenes/entity/passive/chicken_a.tscn" id="31_5sa12"]
 [ext_resource type="PackedScene" uid="uid://cgamh3rrlivab" path="res://scenes/entity/passive/chicken_b.tscn" id="32_ma1yb"]
+[ext_resource type="PackedScene" uid="uid://dfu1llnoufw2i" path="res://scenes/entity/hostile/slime_blue.tscn" id="33_afm54"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_0eown"]
+vertices = PackedVector2Array(1289.91, 715.063, 15.8125, 723.93, 2.1875, 9, 1284.08, 9)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-8, -1, 1294, -1, 1300, 725, 6, 734)])
 
 [node name="world" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_wfd2y")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+visible = false
+navigation_polygon = SubResource("NavigationPolygon_0eown")
 
 [node name="Player" parent="." instance=ExtResource("2_fws7e")]
 position = Vector2(492, 263)
@@ -60,140 +70,84 @@ position = Vector2(378, 296)
 tile_map_data = PackedByteArray("AABEABwAAAADAAIAAABGABgAAAAAAAEAAABIACAAAAABAAEAAABIACEAAAABAAIAAABJABsAAAABAAMAAABJAB8AAAABAAMAAABKABgAAAACAAMAAABKABkAAAADAAEAAABLABkAAAADAAAAAABNABsAAAACAAMAAABNAB4AAAABAAMAAABNACAAAAADAAMAAABNACEAAAAAAAMAAABOAB8AAAABAAAAAABOACAAAAADAAIAAABJAA4AAAABAAMAAABKAAUAAAABAAIAAABKAA0AAAAAAAMAAABLAAoAAAADAAMAAABLAAsAAAADAAAAAABMAAgAAAACAAIAAABNABQAAAABAAEAAABOAAsAAAADAAIAAABOABAAAAADAAMAAABPAA4AAAABAAEAAAAEABYAAAAAAAMAAAAFABgAAAABAAIAAAAFABoAAAAAAAMAAAAHABMAAAADAAIAAAAIABgAAAADAAIAAAARABMAAAACAAQAAAAfABMAAAABAAQAAAAhABQAAAABAAQAAAAjABIAAAABAAQAAAAkABQAAAACAAQAAAAUABAAAAABAAQAAAAbABAAAAADAAQAAAAeABEAAAABAAQAAAAeABIAAAABAAQAAAAeABUAAAABAAQAAAAeABYAAAABAAQAAAAgABEAAAABAAQAAAAgABMAAAACAAQAAAAgABYAAAABAAQAAAAiABYAAAACAAQAAAAjABEAAAADAAQAAAAjABMAAAADAAQAAAA=")
 tile_set = ExtResource("6_b7a0i")
 
-[node name="Tree_A" parent="." instance=ExtResource("8_y7e67")]
-position = Vector2(404, 382)
+[node name="Resources" type="Node2D" parent="."]
+y_sort_enabled = true
+position = Vector2(278, 296)
 
-[node name="Tree_B" parent="." instance=ExtResource("9_m4sah")]
-position = Vector2(217, 278)
+[node name="Bush_A" parent="Resources" instance=ExtResource("15_s5nxs")]
+position = Vector2(-227, 8)
 
-[node name="Tree_A2" parent="." instance=ExtResource("10_3gja4")]
-position = Vector2(316, 273)
+[node name="Bush_B" parent="Resources" instance=ExtResource("16_7aap7")]
+position = Vector2(-165, 13)
 
-[node name="Tree_B2" parent="." instance=ExtResource("11_at0uo")]
-position = Vector2(263, 356)
+[node name="Log_A" parent="Resources" instance=ExtResource("17_vop6l")]
+position = Vector2(-225, 41)
 
-[node name="Rock_Deposit_A" parent="." instance=ExtResource("12_nkxoh")]
-position = Vector2(334, 373)
+[node name="Log_B" parent="Resources" instance=ExtResource("18_ffunx")]
+position = Vector2(-172, 50)
 
-[node name="Rock_Deposit_B" parent="." instance=ExtResource("13_redun")]
-position = Vector2(300, 370)
+[node name="Log_C" parent="Resources" instance=ExtResource("19_gr71f")]
+position = Vector2(-227, 90)
 
-[node name="Rock_Deposit_C" parent="." instance=ExtResource("14_r1fiv")]
-position = Vector2(313, 386)
+[node name="Rock_Deposit_A" parent="Resources" instance=ExtResource("12_nkxoh")]
+position = Vector2(-102, -11)
 
-[node name="Rock_Deposit_A2" parent="." instance=ExtResource("12_nkxoh")]
-position = Vector2(299, 384)
+[node name="Rock_Deposit_B" parent="Resources" instance=ExtResource("13_redun")]
+position = Vector2(-86, -9)
 
-[node name="Rock_Deposit_B2" parent="." instance=ExtResource("13_redun")]
-position = Vector2(265, 381)
+[node name="Rock_Deposit_C" parent="Resources" instance=ExtResource("14_r1fiv")]
+position = Vector2(-98, 1)
 
-[node name="Rock_Deposit_C2" parent="." instance=ExtResource("14_r1fiv")]
-position = Vector2(278, 397)
+[node name="Sapling_A" parent="Resources" instance=ExtResource("20_aaurf")]
+position = Vector2(-113, 32)
 
-[node name="Rock_Deposit_A3" parent="." instance=ExtResource("12_nkxoh")]
-position = Vector2(317, 377)
+[node name="Sapling_B" parent="Resources" instance=ExtResource("21_n842s")]
+position = Vector2(-197, 20)
 
-[node name="Rock_Deposit_B3" parent="." instance=ExtResource("13_redun")]
-position = Vector2(283, 374)
+[node name="Stump_A" parent="Resources" instance=ExtResource("22_a1uyb")]
+position = Vector2(-65, 35)
 
-[node name="Rock_Deposit_C3" parent="." instance=ExtResource("14_r1fiv")]
-position = Vector2(296, 390)
+[node name="Stump_B" parent="Resources" instance=ExtResource("23_xvos4")]
+position = Vector2(-116, 77)
 
-[node name="Rock_Deposit_A4" parent="." instance=ExtResource("12_nkxoh")]
-position = Vector2(341, 364)
+[node name="Tree_Extra_B" parent="Resources" instance=ExtResource("11_at0uo")]
+position = Vector2(8, 11)
 
-[node name="Rock_Deposit_B4" parent="." instance=ExtResource("13_redun")]
-position = Vector2(307, 361)
+[node name="Tree_A" parent="Resources" instance=ExtResource("8_y7e67")]
+position = Vector2(3, 60)
 
-[node name="Rock_Deposit_C4" parent="." instance=ExtResource("14_r1fiv")]
-position = Vector2(320, 377)
+[node name="Tree_Extra_A" parent="Resources" instance=ExtResource("10_3gja4")]
+position = Vector2(-5, 108)
 
-[node name="Rock_Deposit_A5" parent="." instance=ExtResource("12_nkxoh")]
-position = Vector2(362, 397)
+[node name="Tree_B" parent="Resources" instance=ExtResource("9_m4sah")]
+position = Vector2(-71, 118)
 
-[node name="Rock_Deposit_B5" parent="." instance=ExtResource("13_redun")]
-position = Vector2(328, 394)
-
-[node name="Rock_Deposit_C5" parent="." instance=ExtResource("14_r1fiv")]
-position = Vector2(341, 410)
-
-[node name="Rock_Deposit_A6" parent="." instance=ExtResource("12_nkxoh")]
-position = Vector2(327, 408)
-
-[node name="Rock_Deposit_B6" parent="." instance=ExtResource("13_redun")]
-position = Vector2(293, 405)
-
-[node name="Rock_Deposit_C6" parent="." instance=ExtResource("14_r1fiv")]
-position = Vector2(306, 421)
-
-[node name="Rock_Deposit_A7" parent="." instance=ExtResource("12_nkxoh")]
-position = Vector2(345, 401)
-
-[node name="Rock_Deposit_B7" parent="." instance=ExtResource("13_redun")]
-position = Vector2(311, 398)
-
-[node name="Rock_Deposit_C7" parent="." instance=ExtResource("14_r1fiv")]
-position = Vector2(324, 414)
-
-[node name="Rock_Deposit_A8" parent="." instance=ExtResource("12_nkxoh")]
-position = Vector2(369, 388)
-
-[node name="Rock_Deposit_B8" parent="." instance=ExtResource("13_redun")]
-position = Vector2(335, 385)
-
-[node name="Rock_Deposit_C8" parent="." instance=ExtResource("14_r1fiv")]
-position = Vector2(348, 401)
-
-[node name="Bush_A" parent="." instance=ExtResource("15_s5nxs")]
-position = Vector2(102, 290)
-
-[node name="Bush_B" parent="." instance=ExtResource("16_7aap7")]
-position = Vector2(69, 322)
-
-[node name="Log_A" parent="." instance=ExtResource("17_vop6l")]
-position = Vector2(118, 321)
-
-[node name="Log_B" parent="." instance=ExtResource("18_ffunx")]
-position = Vector2(38, 358)
-
-[node name="Log_C" parent="." instance=ExtResource("19_gr71f")]
-position = Vector2(63, 448)
-
-[node name="Base_Resource" parent="." instance=ExtResource("20_aaurf")]
-position = Vector2(149, 337)
-
-[node name="Sapling_B" parent="." instance=ExtResource("21_n842s")]
-position = Vector2(177, 397)
-
-[node name="Stump_A" parent="." instance=ExtResource("22_a1uyb")]
-position = Vector2(96, 361)
-
-[node name="Stump_B" parent="." instance=ExtResource("23_xvos4")]
-position = Vector2(139, 384)
-
-[node name="Pig_A" parent="." instance=ExtResource("24_xqaro")]
+[node name="Pig_A" parent="." groups=["entity"] instance=ExtResource("24_xqaro")]
 position = Vector2(445, 263)
 
-[node name="Pig_B" parent="." instance=ExtResource("25_fej1x")]
+[node name="Pig_B" parent="." groups=["entity"] instance=ExtResource("25_fej1x")]
 position = Vector2(442, 293)
 
-[node name="Pig_C" parent="." instance=ExtResource("26_7m1xe")]
+[node name="Pig_C" parent="." groups=["entity"] instance=ExtResource("26_7m1xe")]
 position = Vector2(451, 318)
 
-[node name="Cow_A" parent="." instance=ExtResource("27_tttfp")]
+[node name="Cow_A" parent="." groups=["entity"] instance=ExtResource("27_tttfp")]
 position = Vector2(574, 310)
 
-[node name="Cow_B" parent="." instance=ExtResource("28_turb6")]
+[node name="Cow_B" parent="." groups=["entity"] instance=ExtResource("28_turb6")]
 position = Vector2(568, 343)
 
-[node name="Cow_C" parent="." instance=ExtResource("29_qhkgo")]
+[node name="Cow_C" parent="." groups=["entity"] instance=ExtResource("29_qhkgo")]
 position = Vector2(543, 319)
 
-[node name="Sheep" parent="." instance=ExtResource("30_xrkab")]
+[node name="Sheep" parent="." groups=["entity"] instance=ExtResource("30_xrkab")]
 position = Vector2(497, 322)
 
-[node name="Chicken_A" parent="." instance=ExtResource("31_5sa12")]
+[node name="Chicken_A" parent="." groups=["entity"] instance=ExtResource("31_5sa12")]
 position = Vector2(545, 219)
 
-[node name="Chicken_B" parent="." instance=ExtResource("32_ma1yb")]
+[node name="Chicken_B" parent="." groups=["entity"] instance=ExtResource("32_ma1yb")]
 position = Vector2(569, 251)
+
+[node name="Slime_Blue" parent="." groups=["entity"] instance=ExtResource("33_afm54")]
+position = Vector2(410, 154)

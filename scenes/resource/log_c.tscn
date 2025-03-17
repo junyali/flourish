@@ -1,28 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://2flimkn545vp"]
+[gd_scene load_steps=4 format=3 uid="uid://demxu85ybilb"]
 
 [ext_resource type="Script" path="res://scripts/resource/log_c.gd" id="1_7qa8s"]
+[ext_resource type="PackedScene" uid="uid://sxirtwtlgvr4" path="res://scenes/resource/resource.tscn" id="1_mldfs"]
 [ext_resource type="Texture2D" uid="uid://dcvl41jhed40v" path="res://art/object/resource/log_c.png" id="2_oupfd"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_5xslu"]
-radius = 66.3099
-
-[node name="Log_C" type="Node2D"]
-y_sort_enabled = true
+[node name="Log_C" instance=ExtResource("1_mldfs")]
 script = ExtResource("1_7qa8s")
 
-[node name="Resource" type="StaticBody2D" parent="." groups=["resource"]]
-
-[node name="Sprite" type="Sprite2D" parent="Resource"]
+[node name="Sprite" parent="." index="0"]
 texture = ExtResource("2_oupfd")
 offset = Vector2(0, -6)
 
-[node name="Collision" type="CollisionPolygon2D" parent="Resource"]
-polygon = PackedVector2Array(-23, -7, -23, -3, -22, -3, -22, -1, -21, -1, -21, 0, 12, 0, 12, -1, 19, -1, 19, -2, 20, -2, 20, -4, 21, -4, 21, -7)
-
-[node name="CueArea" type="Area2D" parent="Resource"]
-
-[node name="Detect" type="CollisionShape2D" parent="Resource/CueArea"]
-shape = SubResource("CircleShape2D_5xslu")
-
-[connection signal="body_entered" from="Resource/CueArea" to="." method="_on_cue_area_body_entered"]
-[connection signal="body_exited" from="Resource/CueArea" to="." method="_on_cue_area_body_exited"]
+[node name="Collision" parent="." index="1"]
+position = Vector2(0, -29)
+polygon = PackedVector2Array(-23, 22, -23, 26, -22, 26, -22, 28, -21, 28, -21, 29, 12, 29, 12, 28, 19, 28, 19, 27, 20, 27, 20, 25, 21, 25, 21, 22)

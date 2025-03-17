@@ -5,7 +5,6 @@ extends Node2D
 @export var hardness: float = 0.1
 @export var health: float = 5.0
 @export var loot_table: Array[Dictionary] = [{}]
-
 @export var harvest_cue: bool = true
 @export var cue_range: float = 32.0
 @export var cue_colour: Color = Color(1.5, 1.5, 1.5)
@@ -14,13 +13,13 @@ extends Node2D
 var current_health: float = health
 
 # Node References
-@onready var static_body: StaticBody2D = $Resource
-@onready var sprite: Sprite2D = static_body.get_node("Sprite")
-@onready var cue_area: CollisionShape2D = static_body.get_node("CueArea").get_node("Detect")
+@onready var sprite: Sprite2D = $Sprite
+@onready var cue_area: CollisionShape2D = $CueArea/Detect
 
 func _ready() -> void:
-	static_body.add_to_group("resource")
-	sprite.texture = object_texture
+	add_to_group("resource")
+	if object_texture and sprite:
+		sprite.texture = object_texture
 	if cue_area.shape is CircleShape2D:
 		cue_area.shape.radius = cue_range
 	
@@ -49,7 +48,7 @@ func take_damage(amount: int) -> void:
 		
 func harvest() -> void:
 	run_loot_table()
-	var tween = get_tree().create_tween()
+	var tween = create_tween()
 	tween.tween_property(sprite, "modulate", Color(1, 1, 1, 0), 0.5)
 	await tween.finished
 	queue_free()
@@ -77,15 +76,15 @@ func hide_cue() -> void:
 	tween_sprite(Color(1, 1, 1))
 		
 func tween_sprite(colour: Color, duration: float = 1.0) -> void:
-	var tween = get_tree().create_tween()
+	var tween = create_tween()
 	tween.tween_property(sprite, "modulate", colour, duration)
 
 func _on_cue_area_body_entered(body: Node2D) -> void:
-	var player = body.get_parent() is Node2D and body.get_parent().is_in_group("player")
+	var player = body.is_in_group("player")
 	if player:
 		show_cue()
 
 func _on_cue_area_body_exited(body: Node2D) -> void:
-	var player = body.get_parent() is Node2D and body.get_parent().is_in_group("player")
+	var player = body.is_in_group("player")
 	if player:
 		hide_cue()

@@ -12,16 +12,13 @@ idle_chance = 0.2
 action_chance = 0.4
 panic_duration = 3.0
 
-[node name="Entity" parent="." index="0"]
-platform_floor_layers = 0
-
-[node name="Sprite" parent="Entity" index="0"]
+[node name="Sprite" parent="." index="0"]
 sprite_frames = ExtResource("3_qfirh")
 animation = &"death"
 
-[node name="Roam" type="Timer" parent="Entity" index="6"]
+[node name="Roam" type="Timer" parent="." index="6"]
 
-[node name="Panic" type="Timer" parent="Entity" index="7"]
+[node name="Panic" type="Timer" parent="." index="7"]
 
-[connection signal="timeout" from="Entity/Roam" to="." method="_on_roam_timeout"]
-[connection signal="timeout" from="Entity/Panic" to="." method="_on_panic_timeout"]
+[connection signal="timeout" from="Roam" to="." method="_on_roam_timeout"]
+[connection signal="timeout" from="Panic" to="." method="_on_panic_timeout"]

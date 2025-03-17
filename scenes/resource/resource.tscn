@@ -5,21 +5,20 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_5xslu"]
 radius = 66.3099
 
-[node name="Base_Resource" type="Node2D"]
+[node name="Resource" type="StaticBody2D" groups=["resource"]]
 y_sort_enabled = true
 script = ExtResource("1_3y16m")
 
-[node name="Resource" type="StaticBody2D" parent="." groups=["resource"]]
+[node name="Sprite" type="Sprite2D" parent="."]
+offset = Vector2(0, -15)
 
-[node name="Sprite" type="Sprite2D" parent="Resource"]
-
-[node name="Collision" type="CollisionPolygon2D" parent="Resource"]
+[node name="Collision" type="CollisionPolygon2D" parent="."]
 position = Vector2(0, -26)
 
-[node name="CueArea" type="Area2D" parent="Resource"]
+[node name="CueArea" type="Area2D" parent="."]
 
-[node name="Detect" type="CollisionShape2D" parent="Resource/CueArea"]
+[node name="Detect" type="CollisionShape2D" parent="CueArea"]
 shape = SubResource("CircleShape2D_5xslu")
 
-[connection signal="body_entered" from="Resource/CueArea" to="." method="_on_cue_area_body_entered"]
-[connection signal="body_exited" from="Resource/CueArea" to="." method="_on_cue_area_body_exited"]
+[connection signal="body_entered" from="CueArea" to="." method="_on_cue_area_body_entered"]
+[connection signal="body_exited" from="CueArea" to="." method="_on_cue_area_body_exited"]

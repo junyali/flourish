@@ -7,12 +7,9 @@
 [node name="Tree_A" instance=ExtResource("1_053mr")]
 script = ExtResource("2_51may")
 
-[node name="Resource" parent="." index="0"]
-position = Vector2(0, 0)
-
-[node name="Sprite" parent="Resource" index="0"]
+[node name="Sprite" parent="." index="0"]
 texture = ExtResource("3_1hf8i")
 offset = Vector2(0, -26)
 
-[node name="Collision" parent="Resource" index="1"]
+[node name="Collision" parent="." index="1"]
 polygon = PackedVector2Array(-10, 13, -10, 14, -11, 14, -11, 15, -12, 15, -12, 18, -11, 18, -11, 19, -12, 19, -12, 23, -7, 23, -7, 26, 0, 26, 0, 25, 3, 25, 3, 26, 10, 26, 10, 23, 9, 23, 9, 22, 12, 22, 12, 18, 11, 18, 11, 17, 10, 17, 10, 16, 9, 16, 9, 14, 8, 14, 8, 12, 6, 12, 6, 13, 0, 13, 0, 14, -5, 14, -5, 13)

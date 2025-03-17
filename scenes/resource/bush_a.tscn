@@ -1,29 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://bvtduhr74a5b6"]
+[gd_scene load_steps=4 format=3 uid="uid://cyufeemy82kne"]
 
+[ext_resource type="PackedScene" uid="uid://sxirtwtlgvr4" path="res://scenes/resource/resource.tscn" id="1_1fsjg"]
 [ext_resource type="Script" path="res://scripts/resource/bush_a.gd" id="1_f6r3t"]
 [ext_resource type="Texture2D" uid="uid://hu87k1dymq2p" path="res://art/object/resource/bush_a.png" id="2_id6g7"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_5xslu"]
-radius = 66.3099
-
-[node name="Bush_A" type="Node2D"]
-y_sort_enabled = true
+[node name="Bush_A" instance=ExtResource("1_1fsjg")]
 script = ExtResource("1_f6r3t")
 
-[node name="Resource" type="StaticBody2D" parent="." groups=["resource"]]
-
-[node name="Sprite" type="Sprite2D" parent="Resource"]
+[node name="Sprite" parent="." index="0"]
 texture = ExtResource("2_id6g7")
-offset = Vector2(0, -15)
 
-[node name="Collision" type="CollisionPolygon2D" parent="Resource"]
-polygon = PackedVector2Array(-15, -9, -15, -10, 15, -10, 15, -9, 16, -9, 16, -6, 12, -6, 12, -5, 10, -5, 10, -3, 11, -3, 11, -1, 5, -1, 5, -2, 2, -2, 2, -1, 1, -1, 1, 0, -4, 0, -4, -1, -6, -1, -6, 0, -10, 0, -10, -1, -12, -1, -12, -3, -13, -3, -13, -4, -16, -4, -16, -8, -15, -8)
-
-[node name="CueArea" type="Area2D" parent="Resource"]
-position = Vector2(0, -26)
-
-[node name="Detect" type="CollisionShape2D" parent="Resource/CueArea"]
-shape = SubResource("CircleShape2D_5xslu")
-
-[connection signal="body_entered" from="Resource/CueArea" to="." method="_on_cue_area_body_entered"]
-[connection signal="body_exited" from="Resource/CueArea" to="." method="_on_cue_area_body_exited"]
+[node name="Collision" parent="." index="1"]
+position = Vector2(0, -29)
+polygon = PackedVector2Array(-15, 20, -15, 21, -16, 21, -16, 25, -13, 25, -13, 26, -12, 26, -12, 28, -10, 28, -10, 29, -6, 29, -6, 28, -4, 28, -4, 29, 1, 29, 1, 28, 2, 28, 2, 27, 5, 27, 5, 28, 11, 28, 11, 26, 10, 26, 10, 25, 10, 24, 12, 24, 12, 23, 16, 23, 16, 20, 15, 20, 15, 19, 6, 19, 6, 20)

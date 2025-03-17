@@ -1,4 +1,4 @@
-extends Node2D # Player character main script :3
+extends CharacterBody2D # Player character main script :3
 
 # // Player Attributes \\ #
 ## MOVEMENT ##
@@ -62,14 +62,13 @@ enum State {
 # \\ End of Runtime Variables Constants // #
 
 # // Node References \\ #
-@onready var character_body: CharacterBody2D = $Body
-@onready var sprite: AnimatedSprite2D = character_body.get_node("Sprite")
-@onready var attack_area: Area2D = character_body.get_node("Range")
-@onready var iframe_timer: Timer = character_body.get_node("Iframe")
-@onready var flash_timer: Timer = character_body.get_node("Flash")
-@onready var attack_timer: Timer = character_body.get_node("Attack")
-@onready var regen_timer: Timer = character_body.get_node("Regen")
-@onready var movement_timer: Timer = character_body.get_node("Movement")
+@onready var sprite: AnimatedSprite2D = $Sprite
+@onready var attack_area: Area2D = $Range
+@onready var iframe_timer: Timer = $Iframe
+@onready var flash_timer: Timer = $Flash
+@onready var attack_timer: Timer = $Attack
+@onready var regen_timer: Timer = $Regen
+@onready var movement_timer: Timer = $Movement
 # \\ End of Node References // #
 
 func _ready() -> void:
@@ -132,9 +131,9 @@ func handle_movement(delta: float) -> void:
 	# Update facing direction when moving
 	if move_direction != Vector2.ZERO and not is_attacking:
 		var target_speed = max_speed * (sprint_multiplier if is_sprinting else 1.0)
-		current_velocity = character_body.velocity.move_toward(move_direction * target_speed, acceleration * delta)
+		current_velocity = velocity.move_toward(move_direction * target_speed, acceleration * delta)
 	else:
-		current_velocity = character_body.velocity.move_toward(Vector2.ZERO, friction * delta)
+		current_velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
 		
 	# Handle animations
 	if not is_attacking:
@@ -154,16 +153,16 @@ func handle_movement(delta: float) -> void:
 		can_dash = false
 		
 		var dash_vector = facing_direction * dash_speed
-		var tween = get_tree().create_tween()
-		tween.tween_property(character_body, "velocity", facing_direction * dash_speed, dash_duration).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+		var tween = create_tween()
+		tween.tween_property(self, "velocity", facing_direction * dash_speed, dash_duration).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
 		
 		await get_tree().create_timer(dash_duration).timeout
 		is_dashing = false
 
 		movement_timer.start()
 		
-	character_body.velocity = current_velocity
-	character_body.move_and_slide()
+	velocity = current_velocity
+	move_and_slide()
 	
 func handle_attack() -> void:
 	if Input.is_action_just_pressed("attack") and not is_attacking:
@@ -174,9 +173,9 @@ func handle_attack() -> void:
 		for body in attack_area.get_overlapping_bodies():
 			print(body)
 			if body.is_in_group("resource"):
-				body.get_parent().take_damage(1)
-			elif body.get_parent().is_in_group("entity"):
-				body.get_parent().take_damage(10, 20, Vector2(5, 5), true, false, true, self)
+				body.take_damage(1)
+			elif body.is_in_group("entity"):
+				body.take_damage(10, 20, Vector2(5, 5), true, false, true, self)
 		
 
 func play_animation(state: State, direction: Vector2) -> void:
@@ -224,7 +223,7 @@ func take_damage(amount: float, knockback_power: float = 10, knockback_dir: Vect
 			flash_sprite(Color(1, 0.2, 0.2), invincibility_duration)
 			
 		var knockback_force = knockback_dir * (knockback_power / (knockback_resistance + knockback_power))
-		character_body.velocity = knockback_force
+		velocity = knockback_force
 		last_hit_time = Time.get_ticks_msec() / 1000.0
 		
 func apply_status_effect(effect_name: String, duration: float = 60.0, amplification: int = 1, tick_interval: float = 1.0) -> void:
@@ -257,7 +256,7 @@ func update_status_effect(delta: float) -> void:
 					flash_sprite(Color(1, 0.4, 0.05), 0.05)
 					
 			"freezing":
-				character_body.velocity *= 0.2
+				velocity *= 0.2
 				flash_sprite(Color(0.35, 0.55, 0.88), 1)
 				
 			"bleeding":
@@ -279,7 +278,7 @@ func remove_status_effect(effect_name: String) -> void:
 		status_effects.erase(effect_name)
 		
 func flash_sprite(colour: Color, duration: float = 1.0) -> void:
-	var tween = get_tree().create_tween()
+	var tween = create_tween()
 	tween.tween_property(sprite, "modulate", colour, duration)
 	tween.tween_property(sprite, "modulate", Color(1, 1, 1, 1), 0.1)
 		
@@ -290,12 +289,6 @@ func respawn() -> void:
 	# (Insert respawn mechanic here idk)
 	current_health = max_health
 	position = Vector2(200, 200)
-
-func _on_hitbox_body_entered(body: Node2D) -> void:
-	pass
-
-func _on_hitbox_body_exited(body: Node2D) -> void:
-	pass
 	
 func _on_iframe_timeout() -> void:
 	flash_timer.stop()
@@ -311,12 +304,16 @@ func _on_flash_timeout() -> void:
 func _on_attack_timeout() -> void:
 	is_attacking = false
 
-
 func _on_regen_timeout() -> void:
 	var time_since_last_hit = (Time.get_ticks_msec() / 1000.0) - last_hit_time
 	if time_since_last_hit >= regen_delay and current_health < max_health:
 		current_health = min(current_health + regen_amount, max_health)
 
-
 func _on_movement_timeout() -> void:
 	can_dash = true
+
+func _on_range_body_entered(body: Node2D) -> void:
+	pass # Replace with function body.
+
+func _on_range_body_exited(body: Node2D) -> void:
+	pass # Replace with function body.

@@ -1,29 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://11nrvdphoqws"]
+[gd_scene load_steps=4 format=3 uid="uid://dpqh0feimgvyg"]
 
+[ext_resource type="PackedScene" uid="uid://sxirtwtlgvr4" path="res://scenes/resource/resource.tscn" id="1_3jlv1"]
 [ext_resource type="Script" path="res://scripts/resource/rock_deposit_c.gd" id="1_pw15k"]
 [ext_resource type="Texture2D" uid="uid://clavbd3i3b5n8" path="res://art/object/resource/rock_deposit_c.png" id="2_ejac6"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_5xslu"]
-radius = 66.3099
-
-[node name="Rock_Deposit_C" type="Node2D"]
-y_sort_enabled = true
+[node name="Rock_Deposit_C" instance=ExtResource("1_3jlv1")]
 script = ExtResource("1_pw15k")
 
-[node name="Resource" type="StaticBody2D" parent="." groups=["resource"]]
-
-[node name="Sprite" type="Sprite2D" parent="Resource"]
+[node name="Sprite" parent="." index="0"]
 texture = ExtResource("2_ejac6")
 offset = Vector2(0, -7)
 
-[node name="Collision" type="CollisionPolygon2D" parent="Resource"]
-position = Vector2(0, -27)
-polygon = PackedVector2Array(7, 18, 7, 24, 6, 24, 6, 25, 5, 25, 5, 26, 2, 26, 2, 27, -3, 27, -3, 26, -5, 26, -5, 25, -6, 25, -6, 24, -7, 24, -7, 21, -6, 21, -6, 19, -5, 19, -5, 18)
-
-[node name="CueArea" type="Area2D" parent="Resource"]
-
-[node name="Detect" type="CollisionShape2D" parent="Resource/CueArea"]
-shape = SubResource("CircleShape2D_5xslu")
-
-[connection signal="body_entered" from="Resource/CueArea" to="." method="_on_cue_area_body_entered"]
-[connection signal="body_exited" from="Resource/CueArea" to="." method="_on_cue_area_body_exited"]
+[node name="Collision" parent="." index="1"]
+position = Vector2(0, -29)
+polygon = PackedVector2Array(-7, 23, -7, 26, -6, 26, -6, 27, -5, 27, -5, 28, -4, 28, -3, 28, -3, 29, 2, 29, 2, 28, 5, 28, 5, 27, 6, 27, 6, 26, 7, 26, 7, 23)

@@ -17,8 +17,8 @@ var current_state: State = State.IDLE
 var target_direction: Vector2 = Vector2.ZERO
 var is_panicking: bool = false
 
-@onready var roam_timer: Timer = character_body.get_node("Roam")
-@onready var panic_timer: Timer = character_body.get_node("Panic")
+@onready var roam_timer: Timer = $Roam
+@onready var panic_timer: Timer = $Panic
 @onready var direction_timer: Timer = Timer.new()
 @onready var roam_action_timer: Timer = Timer.new()
 
@@ -41,8 +41,8 @@ func _ready() -> void:
 		}
 	]
 	
-	character_body.add_child(direction_timer)
-	character_body.add_child(roam_action_timer)
+	add_child(direction_timer)
+	add_child(roam_action_timer)
 	
 	roam_timer.wait_time = roam_interval
 	roam_timer.start()
@@ -80,8 +80,7 @@ func handle_movement(delta: float) -> void:
 	if target_direction.x != 0:
 		sprite.flip_h = target_direction.x > 0
 		
-	character_body.velocity = velocity
-	character_body.move_and_slide()
+	move_and_slide()
 		
 func play_animation(state: String, direction: Vector2) -> void:
 	sprite.play(state)
@@ -147,12 +146,12 @@ func _end_action() -> void:
 	roam_timer.start()
 	
 func _will_collide(velocity: Vector2) -> bool:
-	var test_position = character_body.global_position + velocity * get_physics_process_delta_time()
+	var test_position = global_position + velocity * get_physics_process_delta_time()
 	var space_state = get_world_2d().direct_space_state
 	var query = PhysicsPointQueryParameters2D.new()
 	query.position = test_position
 	query.collide_with_bodies = true
-	query.exclude = [character_body]
+	query.exclude = [self]
 
 	var result = space_state.intersect_point(query)
 	return result.size() > 0

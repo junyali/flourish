@@ -5,23 +5,21 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_33137"]
 radius = 5.0
 
-[node name="Base_Entity" type="Node2D" groups=["entity"]]
+[node name="Passive_Entity" type="CharacterBody2D"]
 y_sort_enabled = true
+platform_floor_layers = 0
 script = ExtResource("1_246x0")
 
-[node name="Entity" type="CharacterBody2D" parent="."]
-y_sort_enabled = true
-
-[node name="Sprite" type="AnimatedSprite2D" parent="Entity"]
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
 y_sort_enabled = true
 animation = &""
 offset = Vector2(0, -6)
 
-[node name="Collision" type="CollisionShape2D" parent="Entity"]
+[node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, -5)
 shape = SubResource("CircleShape2D_33137")
 
-[node name="Healthbar" type="ProgressBar" parent="Entity"]
+[node name="Healthbar" type="ProgressBar" parent="."]
 modulate = Color(0.107092, 0.644964, 3.85046e-07, 1)
 offset_left = -6.0
 offset_top = 3.0
@@ -30,15 +28,17 @@ offset_bottom = 30.0
 scale = Vector2(0.1, 0.1)
 show_percentage = false
 
-[node name="Iframe" type="Timer" parent="Entity"]
+[node name="Iframe" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
 
-[node name="Flash" type="Timer" parent="Entity"]
+[node name="Flash" type="Timer" parent="."]
 one_shot = true
 
-[node name="Regen" type="Timer" parent="Entity"]
+[node name="Regen" type="Timer" parent="."]
 
-[connection signal="timeout" from="Entity/Iframe" to="." method="_on_iframe_timeout"]
-[connection signal="timeout" from="Entity/Flash" to="." method="_on_flash_timeout"]
-[connection signal="timeout" from="Entity/Regen" to="." method="_on_regen_timeout"]
+[node name="Sound" type="AudioStreamPlayer2D" parent="."]
+
+[connection signal="timeout" from="Iframe" to="." method="_on_iframe_timeout"]
+[connection signal="timeout" from="Flash" to="." method="_on_flash_timeout"]
+[connection signal="timeout" from="Regen" to="." method="_on_regen_timeout"]

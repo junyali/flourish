@@ -1,0 +1,72 @@
+[gd_scene load_steps=5 format=3 uid="uid://diy82vfv5j7xg"]
+
+[ext_resource type="Script" path="res://scripts/entity/hostile/hostile.gd" id="1_nbuhc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_33137"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_d8sfi"]
+radius = 14.3178
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wbm8y"]
+radius = 96.0833
+
+[node name="Hostile_Entity" type="CharacterBody2D"]
+y_sort_enabled = true
+collision_layer = 2
+platform_floor_layers = 0
+script = ExtResource("1_nbuhc")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+y_sort_enabled = true
+animation = &""
+offset = Vector2(0, -6)
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_33137")
+
+[node name="Pathfinder" type="NavigationAgent2D" parent="."]
+path_postprocessing = 1
+
+[node name="Range" type="Area2D" parent="."]
+
+[node name="Hitbox" type="CollisionShape2D" parent="Range"]
+position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_d8sfi")
+
+[node name="Aggro" type="Area2D" parent="."]
+
+[node name="Hitbox" type="CollisionShape2D" parent="Aggro"]
+position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_wbm8y")
+
+[node name="Healthbar" type="ProgressBar" parent="."]
+modulate = Color(0.107092, 0.644964, 3.85046e-07, 1)
+offset_left = -6.0
+offset_top = 3.0
+offset_right = 110.0
+offset_bottom = 30.0
+scale = Vector2(0.1, 0.1)
+show_percentage = false
+
+[node name="Iframe" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="Flash" type="Timer" parent="."]
+one_shot = true
+
+[node name="Regen" type="Timer" parent="."]
+
+[node name="Attack" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="body_entered" from="Range" to="." method="_on_range_body_entered"]
+[connection signal="body_exited" from="Range" to="." method="_on_range_body_exited"]
+[connection signal="body_entered" from="Aggro" to="." method="_on_aggro_body_entered"]
+[connection signal="body_exited" from="Aggro" to="." method="_on_aggro_body_exited"]
+[connection signal="timeout" from="Iframe" to="." method="_on_iframe_timeout"]
+[connection signal="timeout" from="Flash" to="." method="_on_flash_timeout"]
+[connection signal="timeout" from="Regen" to="." method="_on_regen_timeout"]
+[connection signal="timeout" from="Attack" to="." method="_on_attack_timeout"]

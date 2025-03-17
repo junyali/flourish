@@ -1,0 +1,34 @@
+[gd_scene load_steps=4 format=3 uid="uid://dfu1llnoufw2i"]
+
+[ext_resource type="PackedScene" uid="uid://diy82vfv5j7xg" path="res://scenes/entity/hostile/hostile.tscn" id="1_dyrpp"]
+[ext_resource type="Script" path="res://scripts/entity/hostile/slime_blue.gd" id="2_og161"]
+[ext_resource type="SpriteFrames" uid="uid://cmlfa6clx57cm" path="res://assets/spriteframes/entity/hostile/slime_blue.tres" id="2_qoanw"]
+
+[node name="Slime_Blue" instance=ExtResource("1_dyrpp")]
+script = ExtResource("2_og161")
+roam_speed = null
+roam_interval = null
+chase_speed = null
+idle_chance = null
+max_speed = null
+max_health = null
+shield = null
+shield_multiplier = null
+attack_damage = null
+attack_speed = null
+regen_amount = null
+regen_interval = null
+regen_delay = null
+invincibility_duration = null
+knockback_resistance = null
+loot_table = null
+
+[node name="Sprite" parent="." index="0"]
+sprite_frames = ExtResource("2_qoanw")
+animation = &"walk"
+frame_progress = 0.624884
+offset = Vector2(0, -8)
+
+[node name="Roam" type="Timer" parent="." index="10"]
+
+[connection signal="timeout" from="Roam" to="." method="_on_roam_timeout"]
