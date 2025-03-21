@@ -92,9 +92,9 @@ func update_stat_display(delta: float) -> void:
 	
 	for effect_name in Global.Player.status_effects.keys():
 		var effect = Global.Player.status_effects[effect_name]
-		var time_left = effect["time_left"]
-		var duration = effect["duration"]
-		var amplification = effect["amplification"]
+		var time_left = effect.time_left
+		var duration = effect.duration
+		var amplification = effect.amplification
 		
 		if not effect_progress_bars.has(effect_name) and time_left > 0:
 			var progress_bar = TextureProgressBar.new()
