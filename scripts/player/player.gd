@@ -98,9 +98,10 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	handle_movement(delta)
 	handle_attack()
+	update_status_effect(delta)
 
 	if current_health <= 0:
-		update_status_effect(delta)
+		respawn()
 	
 func _process(delta: float) -> void:
 	pass
@@ -155,6 +156,7 @@ func handle_movement(delta: float) -> void:
 		var dash_vector = facing_direction * dash_speed
 		var tween = create_tween()
 		tween.tween_property(self, "velocity", facing_direction * dash_speed, dash_duration).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
+		apply_status_effect(BurningEffect.new("burning", 10.0, 1.0, 2.0, 0))
 		
 		await get_tree().create_timer(dash_duration).timeout
 		is_dashing = false
@@ -175,7 +177,13 @@ func handle_attack() -> void:
 			if body.is_in_group("resource"):
 				body.take_damage(1)
 			elif body.is_in_group("entity"):
-				body.take_damage(10, 20, Vector2(5, 5), true, false, true, self)
+				var damage_params = DamageOptions.new({
+					"amount": 10.0,
+					"knockback_power": 16,
+					"knockback_direction": Vector2(10, 10),
+					"attacker": self
+				})
+				body.take_damage(damage_params)
 		
 
 func play_animation(state: State, direction: Vector2) -> void:
@@ -202,75 +210,40 @@ func play_animation(state: State, direction: Vector2) -> void:
 		# Play animation track
 		sprite.play(anim_name)
 		
-func take_damage(amount: float, knockback_power: float = 10, knockback_dir: Vector2 = Vector2.ZERO, apply_flash: bool = true, bypass_shield: bool = false, bypass_iframe: bool = false) -> void:
+func take_damage(options: DamageOptions) -> void:
 	if is_vulnerable:
-		if not bypass_shield:
+		if not options.bypass_shield:
 			# funni name :3
 			# Current formula is logarithmic
 			# var THE_FORMULA = max(amount - (shield * shield_multiplier), 0)
 			# var THE_FORMULA = snapped(max(amount - (log(shield + 1) * shield_multiplier), 0), 0.01)
-			var THE_FORMULA = max(amount - (log(shield + 1) * shield_multiplier), 0)
+			var THE_FORMULA = max(options.amount - (log(shield + 1) * shield_multiplier), 0)
 			current_health -= THE_FORMULA
-			print("Damage Received: %s | Shield: %s | Damage Taken: %s" % [amount, shield, THE_FORMULA])
+			print("Damage Received: %s | Shield: %s | Damage Taken: %s" % [options.amount, shield, THE_FORMULA])
 		else:
-			current_health -= amount
-		if not bypass_iframe:
+			current_health -= options.amount
+		if not options.bypass_iframe:
 			is_vulnerable = false
 			iframe_timer.start()
 			flash_timer.start()
 			
-		if apply_flash:
+		if options.apply_flash:
 			flash_sprite(Color(1, 0.2, 0.2), invincibility_duration)
 			
-		var knockback_force = knockback_dir * (knockback_power / (knockback_resistance + knockback_power))
+		var knockback_force = options.knockback_direction * (options.knockback_power / (knockback_resistance + options.knockback_power))
 		velocity = knockback_force
 		last_hit_time = Time.get_ticks_msec() / 1000.0
 		
-func apply_status_effect(effect_name: String, duration: float = 60.0, amplification: int = 1, tick_interval: float = 1.0) -> void:
-	status_effects[effect_name] = {
-		"time_left": duration,
-		"duration": duration,
-		"amplification": amplification,
-		"tick_interval": tick_interval,
-		"time_since_last_tick": 9999
-	}
+func apply_status_effect(effect: StatusEffect) -> void:
+	status_effects[effect.effect_name] = effect
 	
 func update_status_effect(delta: float) -> void:
-	var effects_awaiting_removal = []
+	var effects_to_remove = []
 	for effect_name in status_effects.keys():
-		var effect = status_effects[effect_name]
-		effect["time_left"] -= delta
-		effect["time_since_last_tick"] += delta
-		
-		match effect_name:
-			"poison":
-				if effect["time_since_last_tick"] >= effect["tick_interval"]:
-					effect["time_since_last_tick"] = 0
-					take_damage(10 * effect["amplification"], 2, Vector2(2, 2), false, true, true)
-					flash_sprite(Color(0.0, 0.5, 0.0), 0.05)
-					
-			"burning":
-				if effect["time_since_last_tick"] >= effect["tick_interval"]:
-					effect["time_since_last_tick"] = 0
-					take_damage(2 * effect["amplification"], 8, Vector2(4, 4), false, true, true)
-					flash_sprite(Color(1, 0.4, 0.05), 0.05)
-					
-			"freezing":
-				velocity *= 0.2
-				flash_sprite(Color(0.35, 0.55, 0.88), 1)
-				
-			"bleeding":
-				if effect["time_since_last_tick"] >= effect["tick_interval"]:
-					effect["time_since_last_tick"] = 0
-					take_damage(10 * effect["amplification"], 0, Vector2(0, 0), false, true, true)
-					flash_sprite(Color(1, 0, 0), 0.05)
-				
-		
-		if effect["time_left"] <= 0:
-			effect["time_left"] = -1
-			effects_awaiting_removal.append(effect_name)
+		if status_effects[effect_name].update_effect(delta, self):
+			effects_to_remove.append(effect_name)
 			
-	for effect in effects_awaiting_removal:
+	for effect in effects_to_remove:
 		remove_status_effect(effect)
 		
 func remove_status_effect(effect_name: String) -> void:
