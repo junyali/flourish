@@ -1,5 +1,4 @@
-extends Object
-class_name GroupNames
+extends Node
 
 const PLAYER_GROUP: String = "player"
 

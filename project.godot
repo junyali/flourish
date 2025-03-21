@@ -17,8 +17,9 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Groups="*res://scripts/groups.gd"
 Global="*res://scripts/global.gd"
+SoundManager="*res://scripts/sound_manager.gd"
+Groups="*res://scripts/groups.gd"
 Gui="*res://scenes/ui/gui.tscn"
 GlobalInventory="*res://scripts/inventory.gd"
 
