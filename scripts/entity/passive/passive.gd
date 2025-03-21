@@ -16,6 +16,7 @@ var current_health: float = max_health
 var is_invincible: bool = false
 var is_knocked_back: bool = false
 var last_damage_source: Node = null
+var sound_player = null
 
 # Node References
 @onready var sprite: AnimatedSprite2D = $Sprite
@@ -51,21 +52,21 @@ func play_animation(state: String, direction: Vector2) -> void:
 		sprite.flip_h = direction.x < 0
 	sprite.play(state)
 	
-func take_damage(amount: float, knockback_power: float = 10, knockback_dir: Vector2 = Vector2.ZERO, apply_flash: bool = true, bypass_shield: bool = false, bypass_iframe: bool = false, attacker: Node = null):
-	if is_invincible and not bypass_iframe:
+func take_damage(options: DamageOptions):
+	if is_invincible and not options.bypass_iframe:
 		return
 		
-	var damage_taken = amount
+	var damage_taken = options.amount
 	current_health -= damage_taken
 	
-	if apply_flash:
+	if options.apply_flash:
 		flash_sprite(Color(1.5, 0.5, 0.5), 0.1)
 		
-	if knockback_dir != Vector2.ZERO:
-		apply_knockback(knockback_dir, knockback_power)
+	if options.knockback_direction != Vector2.ZERO:
+		apply_knockback(options.knockback_direction, options.knockback_power)
 		
-	if attacker:
-		last_damage_source = attacker
+	if options.attacker:
+		last_damage_source = options.attacker
 		
 	if current_health <= 0:
 		_on_death()

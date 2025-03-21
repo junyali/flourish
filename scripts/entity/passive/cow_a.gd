@@ -1,6 +1,6 @@
 extends "res://scripts/entity/passive/passive.gd"
 
-# Pig Variables
+# Animal Variables
 @export var roam_speed: float = 40.0
 @export var roam_interval: float = 3.0
 @export var idle_chance: float = 0.2
@@ -85,8 +85,8 @@ func handle_movement(delta: float) -> void:
 func play_animation(state: String, direction: Vector2) -> void:
 	sprite.play(state)
 	
-func take_damage(amount: float, knockback_power: float = 10, knockback_dir: Vector2 = Vector2.ZERO, apply_flash: bool = true, bypass_shield: bool = false, bypass_iframe: bool = false, attacker: Node = null):
-	super(amount, knockback_power, knockback_dir, apply_flash, bypass_shield, bypass_iframe, attacker)
+func take_damage(options: DamageOptions):
+	super(options)
 	enter_panic()
 	
 func enter_panic():
@@ -95,9 +95,6 @@ func enter_panic():
 	is_panicking = true
 	panic_timer.start(randf_range(3, 5))
 	direction_timer.start(randf_range(0.5, 1.5))
-	if current_health > 0:
-		var sound_player = SoundManager.play_spatial_sfx(load("res://sfx/entity/passive/cow_moo_1.wav"), self, 1.0)
-		sound_player.max_distance = 100
 
 func _on_roam_timeout() -> void:
 	if is_panicking:
@@ -118,11 +115,18 @@ func _on_roam_timeout() -> void:
 		current_state = State.WALK
 		target_direction = Vector2.RIGHT.rotated(randf_range(0, TAU)).normalized()
 		play_animation("side_walk", target_direction)
-		roam_timer.start()	
+		roam_timer.start()
+	
+	var random_sound = randi_range(1, 3)
+	sound_player = SoundManager.play_spatial_sfx(load("res://sfx/entity/passive/cow_moo_" + str(random_sound) + ".wav"), self, 1.0)
+	sound_player.max_distance = 100
 		
 func _on_death():
 	if last_damage_source and last_damage_source.is_in_group("player"):  
 		run_loot_table()
+		
+	if sound_player:
+		sound_player = null
 		
 	super()
 	

@@ -124,30 +124,156 @@ position = Vector2(-71, 118)
 
 [node name="Pig_A" parent="." groups=["entity"] instance=ExtResource("24_xqaro")]
 position = Vector2(445, 263)
+roam_speed = null
+roam_interval = null
+idle_chance = null
+action_chance = null
+panic_duration = null
+max_speed = null
+max_health = null
+shield_multiplier = null
+regen_amount = null
+regen_interval = null
+regen_delay = null
+invincibility_duration = null
+knockback_resistance = null
+loot_table = null
 
 [node name="Pig_B" parent="." groups=["entity"] instance=ExtResource("25_fej1x")]
 position = Vector2(442, 293)
+roam_speed = null
+roam_interval = null
+idle_chance = null
+action_chance = null
+panic_duration = null
+max_speed = null
+max_health = null
+shield_multiplier = null
+regen_amount = null
+regen_interval = null
+regen_delay = null
+invincibility_duration = null
+knockback_resistance = null
+loot_table = null
 
 [node name="Pig_C" parent="." groups=["entity"] instance=ExtResource("26_7m1xe")]
 position = Vector2(451, 318)
+roam_speed = null
+roam_interval = null
+idle_chance = null
+action_chance = null
+panic_duration = null
+max_speed = null
+max_health = null
+shield_multiplier = null
+regen_amount = null
+regen_interval = null
+regen_delay = null
+invincibility_duration = null
+knockback_resistance = null
+loot_table = null
 
 [node name="Cow_A" parent="." groups=["entity"] instance=ExtResource("27_tttfp")]
 position = Vector2(574, 310)
+roam_speed = null
+roam_interval = null
+idle_chance = null
+action_chance = null
+panic_duration = null
+max_speed = null
+max_health = null
+shield_multiplier = null
+regen_amount = null
+regen_interval = null
+regen_delay = null
+invincibility_duration = null
+knockback_resistance = null
+loot_table = null
 
 [node name="Cow_B" parent="." groups=["entity"] instance=ExtResource("28_turb6")]
 position = Vector2(568, 343)
+roam_speed = null
+roam_interval = null
+idle_chance = null
+action_chance = null
+panic_duration = null
+max_speed = null
+max_health = null
+shield_multiplier = null
+regen_amount = null
+regen_interval = null
+regen_delay = null
+invincibility_duration = null
+knockback_resistance = null
+loot_table = null
 
 [node name="Cow_C" parent="." groups=["entity"] instance=ExtResource("29_qhkgo")]
 position = Vector2(543, 319)
+roam_speed = null
+roam_interval = null
+idle_chance = null
+action_chance = null
+panic_duration = null
+max_speed = null
+max_health = null
+shield_multiplier = null
+regen_amount = null
+regen_interval = null
+regen_delay = null
+invincibility_duration = null
+knockback_resistance = null
+loot_table = null
 
 [node name="Sheep" parent="." groups=["entity"] instance=ExtResource("30_xrkab")]
 position = Vector2(497, 322)
+roam_speed = null
+roam_interval = null
+idle_chance = null
+action_chance = null
+panic_duration = null
+max_speed = null
+max_health = null
+shield_multiplier = null
+regen_amount = null
+regen_interval = null
+regen_delay = null
+invincibility_duration = null
+knockback_resistance = null
+loot_table = null
 
 [node name="Chicken_A" parent="." groups=["entity"] instance=ExtResource("31_5sa12")]
 position = Vector2(545, 219)
+roam_speed = null
+roam_interval = null
+idle_chance = null
+action_chance = null
+panic_duration = null
+max_speed = null
+max_health = null
+shield_multiplier = null
+regen_amount = null
+regen_interval = null
+regen_delay = null
+invincibility_duration = null
+knockback_resistance = null
+loot_table = null
 
 [node name="Chicken_B" parent="." groups=["entity"] instance=ExtResource("32_ma1yb")]
 position = Vector2(569, 251)
+roam_speed = null
+roam_interval = null
+idle_chance = null
+action_chance = null
+panic_duration = null
+max_speed = null
+max_health = null
+shield_multiplier = null
+regen_amount = null
+regen_interval = null
+regen_delay = null
+invincibility_duration = null
+knockback_resistance = null
+loot_table = null
 
 [node name="Slime_Blue" parent="." groups=["entity"] instance=ExtResource("33_afm54")]
 position = Vector2(410, 154)

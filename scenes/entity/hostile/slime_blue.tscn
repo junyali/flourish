@@ -5,6 +5,7 @@
 [ext_resource type="SpriteFrames" uid="uid://cmlfa6clx57cm" path="res://assets/spriteframes/entity/hostile/slime_blue.tres" id="2_qoanw"]
 
 [node name="Slime_Blue" instance=ExtResource("1_dyrpp")]
+collision_layer = 1
 script = ExtResource("2_og161")
 roam_speed = null
 roam_interval = null

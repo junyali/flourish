@@ -11,7 +11,7 @@ extends CharacterBody2D
 @export var regen_interval: float = 10.0
 @export var regen_delay: float = 10.0
 @export var invincibility_duration: float = 0.1
-@export var knockback_resistance: float = 1.0
+@export var knockback_resistance: float = 0.05
 @export var loot_table: Array[Dictionary] = [{}]
 
 # Entity Variables
@@ -70,11 +70,14 @@ func _process(delta: float) -> void:
 	
 func handle_movement(delta: float) -> void:
 	if is_knocked_back:
-		knockback_velocity = knockback_velocity.lerp(Vector2.ZERO, 5 * delta)
+		knockback_velocity = knockback_velocity.lerp(Vector2.ZERO, 2 * delta)
 		if knockback_velocity.length() < 1:
 			is_knocked_back = false
+			knockback_velocity = Vector2.ZERO
+			
+		print("Applied Knockback: ", knockback_velocity)
 	
-	velocity = velocity
+	velocity += knockback_velocity
 	move_and_slide()
 	
 func play_animation(state: String, direction: Vector2) -> void:
@@ -82,7 +85,8 @@ func play_animation(state: String, direction: Vector2) -> void:
 		sprite.flip_h = direction.x < 0
 	sprite.play(state)
 	
-func take_damage(options: DamageDictionary):
+func take_damage(options: DamageOptions):
+	print(1)
 	if is_invincible and not options.bypass_iframe:
 		return
 		
@@ -92,8 +96,8 @@ func take_damage(options: DamageDictionary):
 	if options.apply_flash:
 		flash_sprite(Color(1.5, 0.5, 0.5), 0.1)
 		
-	if options.knockback_dir != Vector2.ZERO:
-		apply_knockback(options.knockback_dir, options.knockback_power)
+	if options.knockback_power != 0:
+		apply_knockback(options.attacker.global_position, options.knockback_power)
 		
 	if options.attacker:
 		last_damage_source = options.attacker
@@ -107,11 +111,11 @@ func take_damage(options: DamageDictionary):
 	
 func flash_sprite(colour: Color, duration: float = 1.0) -> void:
 	var tween = get_tree().create_tween()
-	tween.tween_property(sprite, "modulate", colour, duration).chain()
+	tween.tween_property(sprite, "modulate", colour, duration)
 	tween.tween_property(sprite, "modulate", Color(1, 1, 1, 1), 0.1)
 	
-func apply_knockback(direction: Vector2, power: float) -> void:
-	velocity = direction.normalized() * (power * (1.0 - knockback_resistance))
+func apply_knockback(direction, power: float) -> void:
+	knockback_velocity = (global_position - direction).normalized() * (power * (1.0 - knockback_resistance))
 	is_knocked_back = true
 	
 func die() -> void:

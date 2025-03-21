@@ -85,8 +85,8 @@ func handle_movement(delta: float) -> void:
 func play_animation(state: String, direction: Vector2) -> void:
 	sprite.play(state)
 	
-func take_damage(amount: float, knockback_power: float = 10, knockback_dir: Vector2 = Vector2.ZERO, apply_flash: bool = true, bypass_shield: bool = false, bypass_iframe: bool = false, attacker: Node = null):
-	super(amount, knockback_power, knockback_dir, apply_flash, bypass_shield, bypass_iframe, attacker)
+func take_damage(options: DamageOptions):
+	super(options)
 	enter_panic()
 	
 func enter_panic():
@@ -117,6 +117,9 @@ func _on_roam_timeout() -> void:
 		target_direction.y = 0
 		play_animation("side_walk", target_direction)
 		roam_timer.start()	
+		
+	sound_player = SoundManager.play_spatial_sfx(load("res://sfx/entity/passive/sheep_baa_1.wav"), self, 1.0)
+	sound_player.max_distance = 100
 		
 func _on_death():
 	if last_damage_source and last_damage_source.is_in_group("player"):  

@@ -11,6 +11,7 @@ extends Node2D
 
 # Resource Variables
 var current_health: float = health
+var sound_player = null
 
 # Node References
 @onready var sprite: Sprite2D = $Sprite
@@ -49,7 +50,7 @@ func take_damage(amount: int) -> void:
 func harvest() -> void:
 	run_loot_table()
 	var tween = create_tween()
-	tween.tween_property(sprite, "modulate", Color(1, 1, 1, 0), 0.5)
+	tween.tween_property(sprite, "modulate", Color(1, 1, 1, 0), 1.0)
 	await tween.finished
 	queue_free()
 	
