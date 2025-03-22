@@ -25,12 +25,13 @@ offset = Vector2(0, -16)
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 y_sort_enabled = true
-position = Vector2(0, -4)
+position = Vector2(0, -3)
 shape = SubResource("CircleShape2D_kxhnw")
 
 [node name="Range" type="Area2D" parent="."]
 
 [node name="Hitbox" type="CollisionShape2D" parent="Range"]
+visible = false
 position = Vector2(0, -8)
 shape = SubResource("CircleShape2D_3dhac")
 

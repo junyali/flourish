@@ -7,22 +7,10 @@
 [node name="Slime_Blue" instance=ExtResource("1_dyrpp")]
 collision_layer = 1
 script = ExtResource("2_og161")
-roam_speed = null
-roam_interval = null
-chase_speed = null
-idle_chance = null
-max_speed = null
-max_health = null
-shield = null
-shield_multiplier = null
-attack_damage = null
-attack_speed = null
-regen_amount = null
-regen_interval = null
-regen_delay = null
-invincibility_duration = null
-knockback_resistance = null
-loot_table = null
+roam_speed = 40.0
+roam_interval = 3.0
+chase_speed = 60.0
+idle_chance = 0.1
 
 [node name="Sprite" parent="." index="0"]
 sprite_frames = ExtResource("2_qoanw")
