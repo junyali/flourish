@@ -114,10 +114,10 @@ func handle_movement(delta: float) -> void:
 	
 	# Determine movement priority
 	# Consequentely prevents diagonal movement (intended)
-	if h_dir != 0:
-		input_dir = Vector2(h_dir, 0)
-	elif v_dir != 0:
-		input_dir = Vector2(0, v_dir)
+	if abs(h_dir) > abs(v_dir):
+		input_dir = Vector2(sign(h_dir), 0)
+	elif abs(v_dir) > 0:
+		input_dir = Vector2(0, sign(v_dir))
 	
 	# Accelerative speed (was that even a word??)
 	if input_dir != Vector2.ZERO:
