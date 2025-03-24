@@ -25,7 +25,8 @@ GlobalInventory="*res://scripts/inventory.gd"
 
 [display]
 
-window/stretch/scale=2.0
+window/size/mode=2
+window/stretch/scale=4.0
 mouse_cursor/custom_image="res://art/gui/cursor/default.png"
 
 [dotnet]
