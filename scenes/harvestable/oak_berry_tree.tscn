@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://bojxpui1gib1f"]
+
+[ext_resource type="PackedScene" uid="uid://dbegfmaigk5ur" path="res://scenes/harvestable/harvestable.tscn" id="1_ch3cm"]
+[ext_resource type="Script" path="res://scripts/harvestable/oak_berry_tree.gd" id="2_wi4vw"]
+[ext_resource type="Texture2D" uid="uid://by3vjbrqut2wo" path="res://art/tilemap/object/summer and spring items.png" id="2_xtxql"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fxixx"]
+atlas = ExtResource("2_xtxql")
+region = Rect2(48, 160, 48, 48)
+
+[node name="OakBerryTree" instance=ExtResource("1_ch3cm")]
+script = ExtResource("2_wi4vw")
+
+[node name="Sprite" parent="." index="0"]
+texture = SubResource("AtlasTexture_fxixx")
+offset = Vector2(-7, -23)
+script = null
+
+[node name="Collision" parent="." index="2"]
+polygon = PackedVector2Array(6, 20, 6, 22, 7, 22, 7, 23, 8, 23, 8, 24, 9, 24, 9, 25, 4, 25, 4, 24, 2, 24, 2, 26, -1, 26, -1, 25, -2, 25, -2, 23, -4, 23, -4, 24, -5, 24, -5, 25, -9, 25, -9, 24, -8, 24, -8, 23, -7, 23, -7, 22, -6, 22, -6, 20)

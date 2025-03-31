@@ -1,6 +1,6 @@
 extends Node
 
-const INVENTORY_SIZE = 16
+const INVENTORY_SIZE: int = 15
 
 var items: Array = []
 

@@ -16,7 +16,6 @@ var sound_player = null
 # Node References
 @onready var sprite: Sprite2D = $Sprite
 @onready var cue_area: CollisionShape2D = $CueArea/Detect
-
 func _ready() -> void:
 	add_to_group("resource")
 	if object_texture and sprite:

@@ -11,7 +11,7 @@ var is_dragging: bool = false
 func set_item(item):
 	item_id = item.item_id
 	count = item.quantity
-	item_texture = load("res://art/gui/items/" + item_id.to_lower() + ".png")
+	item_texture = ItemDatabase.get_item_texture(item_id)
 	itemrect.texture = item_texture
 	label.text = str(count) if count > 0 else ""
 	

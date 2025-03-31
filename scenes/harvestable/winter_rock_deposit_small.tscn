@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://jr62bepkhp4w"]
+
+[ext_resource type="PackedScene" uid="uid://dbegfmaigk5ur" path="res://scenes/harvestable/harvestable.tscn" id="1_67air"]
+[ext_resource type="Script" path="res://scripts/harvestable/winter_rock_deposit_small.gd" id="2_4tj4k"]
+[ext_resource type="Texture2D" uid="uid://d3a83w0ccjdw4" path="res://art/tilemap/object/winter items.png" id="3_6x7h0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fxixx"]
+atlas = ExtResource("3_6x7h0")
+region = Rect2(64, 144, 32, 16)
+
+[node name="WinterRockDepositSmall" instance=ExtResource("1_67air")]
+script = ExtResource("2_4tj4k")
+
+[node name="Sprite" parent="." index="0"]
+texture = SubResource("AtlasTexture_fxixx")
+offset = Vector2(1, -7)
+
+[node name="Collision" parent="." index="2"]
+polygon = PackedVector2Array(-15, 17, -15, 21, -14, 21, -14, 22, -13, 22, -13, 23, -3, 23, -3, 24, -2, 24, -2, 25, -1, 25, -1, 26, 11, 26, 11, 25, 13, 25, 13, 24, 14, 24, 14, 21, 13, 21, 13, 18, 12, 18, 12, 17)

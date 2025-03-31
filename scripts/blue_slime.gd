@@ -74,8 +74,6 @@ func handle_movement(delta: float) -> void:
 		body_sprite.flip_h = move_direction.x < 0
 	else:
 		velocity = Vector2.ZERO
-			
-	move_and_slide()
 	
 func play_animation(state: String, direction: Vector2) -> void:
 	var dir_str = str(direction)

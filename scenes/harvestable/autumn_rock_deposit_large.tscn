@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://llg42j1kkxba"]
+
+[ext_resource type="PackedScene" uid="uid://dbegfmaigk5ur" path="res://scenes/harvestable/harvestable.tscn" id="1_qn15f"]
+[ext_resource type="Script" path="res://scripts/harvestable/autumn_rock_deposit_large.gd" id="2_djebo"]
+[ext_resource type="Texture2D" uid="uid://cxr0tbsnij2kf" path="res://art/tilemap/object/autumn items.png" id="3_dq21x"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fxixx"]
+atlas = ExtResource("3_dq21x")
+region = Rect2(48, 96, 32, 32)
+
+[node name="AutumnRockDepositLarge" instance=ExtResource("1_qn15f")]
+script = ExtResource("2_djebo")
+
+[node name="Sprite" parent="." index="0"]
+texture = SubResource("AtlasTexture_fxixx")
+offset = Vector2(0, -9)
+
+[node name="Collision" parent="." index="2"]
+polygon = PackedVector2Array(-16, 19, -16, 23, -15, 23, -15, 24, -12, 24, -12, 25, -7, 25, -7, 26, -2, 26, -2, 25, 0, 25, 0, 24, 1, 24, 1, 25, 2, 25, 2, 26, 8, 26, 8, 25, 9, 25, 9, 24, 10, 24, 10, 23, 15, 23, 15, 22, 16, 22, 16, 16, 15, 16, 15, 15, 14, 15, 14, 14, 11, 14, 11, 15, 10, 15, 10, 16, 9, 16, 9, 18, 8, 18, 8, 17, 7, 17, 7, 16, 2, 16, 2, 17, 1, 17, 1, 18, 0, 18, 0, 20, -1, 20, -1, 18, -9, 18, -9, 17, -11, 17, -11, 16, -14, 16, -14, 17, -15, 17, -15, 19)

@@ -27,7 +27,7 @@ func _ready() -> void:
 	shield_multiplier = 0.1
 	loot_table = [
 		{
-			"item_id": "seed_1",
+			"item_id": "berry",
 			"quantity": {
 				"min": 3,
 				"max": 5,

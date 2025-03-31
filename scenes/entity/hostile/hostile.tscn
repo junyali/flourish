@@ -14,6 +14,7 @@ radius = 96.0833
 [node name="Hostile_Entity" type="CharacterBody2D"]
 y_sort_enabled = true
 collision_layer = 2
+collision_mask = 5
 platform_floor_layers = 0
 script = ExtResource("1_nbuhc")
 
@@ -30,12 +31,16 @@ shape = SubResource("CircleShape2D_33137")
 path_postprocessing = 1
 
 [node name="Range" type="Area2D" parent="."]
+collision_layer = 5
+collision_mask = 5
 
 [node name="Hitbox" type="CollisionShape2D" parent="Range"]
 position = Vector2(0, -5)
 shape = SubResource("CircleShape2D_d8sfi")
 
 [node name="Aggro" type="Area2D" parent="."]
+collision_layer = 5
+collision_mask = 5
 
 [node name="Hitbox" type="CollisionShape2D" parent="Aggro"]
 position = Vector2(0, -5)

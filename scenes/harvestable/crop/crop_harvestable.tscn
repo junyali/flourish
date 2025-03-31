@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://cas6tkewujsby"]
+
+[ext_resource type="Script" path="res://scripts/harvestable/crop/crop_harvestable.gd" id="1_1ddh5"]
+[ext_resource type="Texture2D" uid="uid://cf2o246l8niy7" path="res://art/gui/interactable/ui elements.png" id="2_jyss5"]
+[ext_resource type="Texture2D" uid="uid://dd0wbw0jduqhe" path="res://art/gui/item/tools.png" id="3_mpbkx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cij3v"]
+atlas = ExtResource("2_jyss5")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6xjjt"]
+atlas = ExtResource("3_mpbkx")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5xslu"]
+radius = 66.3099
+
+[node name="CropHarvestable" type="StaticBody2D" groups=["resource"]]
+y_sort_enabled = true
+collision_layer = 9
+collision_mask = 0
+script = ExtResource("1_1ddh5")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+
+[node name="CueSprite" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = SubResource("AtlasTexture_cij3v")
+
+[node name="ToolHintSprite" type="Sprite2D" parent="."]
+position = Vector2(0, 2)
+scale = Vector2(0.25, 0.25)
+texture = SubResource("AtlasTexture_6xjjt")
+offset = Vector2(0, -7)
+
+[node name="Collision" type="CollisionPolygon2D" parent="."]
+visible = false
+
+[node name="CueArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="Detect" type="CollisionShape2D" parent="CueArea"]
+visible = false
+shape = SubResource("CircleShape2D_5xslu")
+
+[connection signal="body_entered" from="CueArea" to="." method="_on_cue_area_body_entered"]
+[connection signal="body_exited" from="CueArea" to="." method="_on_cue_area_body_exited"]

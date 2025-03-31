@@ -1,13 +1,13 @@
 extends CanvasLayer
 
 # UI Variables
-var effect_progress_bars = {}
+var effect_progress_bars: Dictionary = {}
+var selected_slot: int = 0
 
 # Inventory Dragging
 var dragging_item = null
-var drag_offset = Vector2.ZERO
+var drag_offset: Vector2 = Vector2.ZERO
 var drag_node = null
-
 
 # Node References
 @onready var player = get_tree().get_first_node_in_group("player")
@@ -16,24 +16,50 @@ var drag_node = null
 @onready var cooldown_container = $HUD/TopLeftCorner/StatContainer/CooldownContainer
 @onready var effect_container = $HUD/TopLeftCorner/EffectContainer
 @onready var inventory_ui = $Inventory
-@onready var inventory_grid = $Inventory/TextureRect/GridContainer
+@onready var inventory_grid = $Inventory/Background/GridContainer
+@onready var hotbar_ui = $Hotbar
+@onready var hotbar_slots = $Hotbar/Container
 @onready var controls_ui = $Controls
 @onready var controls_list = $Controls/ControlsList
 
-var available_controls = {}
+var available_controls: Dictionary = {}
 
 func _ready() -> void:
 	inventory_ui.visible = false
+	Hotbar.hotbar_changed.connect(_on_selection_changed)
 
 func _process(delta: float) -> void:
 	if Global.Player:
 		update_stat_display(delta)
 		update_inventory()
 		check_controls()
+		update_hotbar()
 	if Input.is_action_just_pressed("ui_inventory"):
 		toggle_inventory()
 	if dragging_item and drag_node:
 		drag_node.position = get_viewport().get_global_mouse_position() + drag_offset
+		
+func update_hotbar() -> void:
+	var slots = hotbar_slots.get_children()
+	for index in range(slots.size()):
+		var slot = hotbar_slots.get_child(index)
+		var tween = slot.create_tween()
+		
+		slot.get_node("Index").text = str(index + 1)
+
+		if Hotbar.tools.size() > index and Hotbar.tools[index]:
+			slot.get_node("Item").texture = ItemDatabase.get_item_texture(Hotbar.tools[index])
+		else:
+			slot.get_node("Item").texture = null
+	
+		if index == selected_slot:
+			tween.tween_property(slot, "position:y", -10, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		else:
+			tween.tween_property(slot, "position:y", 0, 0.2).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+		
+func _on_selection_changed(new_slot: int) -> void:
+	selected_slot = new_slot
+	update_hotbar()
 		
 func check_controls() -> void:
 	if Global.Player.can_dash:
@@ -150,22 +176,6 @@ func update_stat_display(delta: float) -> void:
 func toggle_inventory() -> void:
 	inventory_ui.visible = not inventory_ui.visible
 	if inventory_ui.visible:
-		# Debug code
-		var dir_path = "res://art/gui/items"
-		var dir = DirAccess.open(dir_path)
-		var item_list = dir.get_files()
-		var count = 0
-		for item in item_list:
-			if item.contains("import"):
-				item_list.remove_at(count)
-			count += 1
-		
-		var ran = item_list[randi() % item_list.size()].replace(".png", "")
-		var n = randi() % 8 + 1
-		print(ran, n)
-		
-		GlobalInventory.add_item(ran, n)
-		# End debug
 		populate_inventory()
 	else:
 		clear_inventory()
@@ -193,12 +203,12 @@ func clear_inventory() -> void:
 		cell.clear_item()
 		
 func start_drag(cell) -> void:
-	dragging_item = cell.item_texture
+	dragging_item = ItemDatabase.get_item_texture(cell.item_id)
 	drag_offset = cell.get_local_mouse_position()
 
 	drag_node = TextureRect.new()
 	drag_node.texture = dragging_item
-	drag_node.rect_min_size = cell.rect_min_size
+	drag_node.custom_minimum_size = cell.custom_minimum_size
 	add_child(drag_node)
 
 	drag_node.position = get_viewport().get_global_mouse_position() + drag_offset

@@ -2,7 +2,7 @@ extends CharacterBody2D # Player character main script :3
 
 # // Player Attributes \\ #
 ## MOVEMENT ##
-@export var max_speed: float = 60.0 # Maximum speed player is capped at walking
+@export var max_speed: float = 40.0 # Maximum speed player is capped at walking
 @export var acceleration: float = 500.0 # From stationary to max speed
 @export var friction: float = 1500.0 # From max speed to stationary
 
@@ -34,10 +34,10 @@ extends CharacterBody2D # Player character main script :3
 # \\ End of Player Attributes // #
 
 # // Runtime Variables Constants \\ #
-var current_velocity: Vector2 = Vector2.ZERO
-var current_health: float = 90.0
-var status_effects = {}
-var move_direction: Vector2 = Vector2.ZERO
+var current_velocity: Vector2  = Vector2.ZERO
+var current_health: float      = 90.0
+var status_effects: Dictionary = {}
+var move_direction: Vector2    = Vector2.ZERO
 var facing_direction: Vector2 = Vector2(0, 1)
 var is_attacking: bool = false
 var is_vulnerable: bool = true
@@ -46,7 +46,7 @@ var is_dashing: bool = false
 var is_sprinting: bool = false
 var last_hit_time: float = 0.0
 
-const ANIMATIONS = {
+const ANIMATIONS: Dictionary = {
 	"(0, -1)": ["back_idle", "back_walk", "back_attack"],
 	"(0, 1)": ["front_idle", "front_walk", "front_attack"],
 	"(-1, 0)": ["side_idle", "side_walk", "side_attack"],
@@ -87,6 +87,12 @@ func _ready() -> void:
 	movement_timer.wait_time = dash_cooldown
 	movement_timer.one_shot = false
 	
+	Hotbar.add_tool("sword", 0)
+	Hotbar.add_tool("pickaxe", 1)
+	Hotbar.add_tool("axe", 2)
+	Hotbar.add_tool("hoe", 3)
+	Hotbar.add_tool("watering_can", 4)
+	
 	# Set defaults
 	play_animation(State.IDLE, Vector2(0, 1)) # Default front idle animation
 	sprite.modulate = Color.WHITE
@@ -97,20 +103,20 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	handle_movement(delta)
-	handle_attack()
+	handle_action()
 	update_status_effect(delta)
 
 	if current_health <= 0:
 		respawn()
 	
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 	
 func handle_movement(delta: float) -> void:
 	# Get raw input values
-	var h_dir = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
-	var v_dir = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
-	var input_dir = Vector2(h_dir, v_dir).normalized()
+	var h_dir: float = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
+	var v_dir: float = Input.get_action_strength("move_down") - Input.get_action_strength("move_up")
+	var input_dir: Vector2 = Vector2(h_dir, v_dir).normalized()
 	
 	# Determine movement priority
 	# Consequentely prevents diagonal movement (intended)
@@ -131,14 +137,14 @@ func handle_movement(delta: float) -> void:
 		
 	# Update facing direction when moving
 	if move_direction != Vector2.ZERO and not is_attacking:
-		var target_speed = max_speed * (sprint_multiplier if is_sprinting else 1.0)
+		var target_speed: float = max_speed * (sprint_multiplier if is_sprinting else 1.0)
 		current_velocity = velocity.move_toward(move_direction * target_speed, acceleration * delta)
 	else:
 		current_velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
 		
 	# Handle animations
 	if not is_attacking:
-		var state = State.IDLE
+		var state: State = State.IDLE
 		if input_dir != Vector2.ZERO:
 			if is_sprinting:
 				state = State.SPRINT
@@ -153,10 +159,10 @@ func handle_movement(delta: float) -> void:
 	if is_dashing and can_dash and not is_attacking:
 		can_dash = false
 		
-		var dash_vector = facing_direction * dash_speed
-		var tween = create_tween()
+		var tween: Tween = create_tween()
 		tween.tween_property(self, "velocity", facing_direction * dash_speed, dash_duration).set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
-		apply_status_effect(BurningEffect.new("burning", 10.0, 1.0, 2.0, 0))
+		
+		# DEBUG EFFECTS: apply_status_effect(BurningEffect.new("burning", 10.0, 1.0, 2.0, 0))
 		
 		await get_tree().create_timer(dash_duration).timeout
 		is_dashing = false
@@ -166,17 +172,16 @@ func handle_movement(delta: float) -> void:
 	velocity = current_velocity
 	move_and_slide()
 	
-func handle_attack() -> void:
-	if Input.is_action_just_pressed("attack") and not is_attacking:
+func handle_action() -> void:
+	if Input.is_action_just_pressed("action") and not is_attacking:
+		var selected_tool = Hotbar.tools[Hotbar.selected_slot]
+	
 		is_attacking = true
 		play_animation(State.ATTACK, facing_direction)
 		attack_timer.start()
 		
 		for body in attack_area.get_overlapping_bodies():
-			print(body)
-			if body.is_in_group("resource"):
-				body.take_damage(1)
-			elif body.is_in_group("entity"):
+			if body.is_in_group("entity") and selected_tool == "sword":
 				var damage_params = DamageOptions.new({
 					"amount": 10.0,
 					"knockback_power": 16,
@@ -184,12 +189,23 @@ func handle_attack() -> void:
 					"attacker": self
 				})
 				body.take_damage(damage_params)
-		
+			elif body.is_in_group("harvestable"):
+				if body.is_in_group("require_pickaxe"):
+					if selected_tool == "pickaxe":
+						body.take_damage(1)
+				elif body.is_in_group("require_axe"):
+					if selected_tool == "axe":
+						body.take_damage(1)
+				elif body.is_in_group("require_hoe"):
+					if selected_tool == "hoe":
+						body.take_damage(1)
+				else:
+					body.take_damage(1)
 
 func play_animation(state: State, direction: Vector2) -> void:
-	var dir_str = str(direction)
+	var dir_str: String = str(direction)
 	if ANIMATIONS.has(dir_str):
-		var anim_name = ""
+		var anim_name: String = ""
 		
 		match state:
 			State.IDLE:
@@ -230,7 +246,7 @@ func take_damage(options: DamageOptions) -> void:
 		if options.apply_flash:
 			flash_sprite(Color(1, 0.2, 0.2), invincibility_duration)
 			
-		var knockback_force = options.knockback_direction * (options.knockback_power / (knockback_resistance + options.knockback_power))
+		var knockback_force: Vector2 = options.knockback_direction * (options.knockback_power / (knockback_resistance + options.knockback_power))
 		velocity = knockback_force
 		last_hit_time = Time.get_ticks_msec() / 1000.0
 		
@@ -238,7 +254,7 @@ func apply_status_effect(effect: StatusEffect) -> void:
 	status_effects[effect.effect_name] = effect
 	
 func update_status_effect(delta: float) -> void:
-	var effects_to_remove = []
+	var effects_to_remove: Array[Variant] = []
 	for effect_name in status_effects.keys():
 		if status_effects[effect_name].update_effect(delta, self):
 			effects_to_remove.append(effect_name)
@@ -251,7 +267,7 @@ func remove_status_effect(effect_name: String) -> void:
 		status_effects.erase(effect_name)
 		
 func flash_sprite(colour: Color, duration: float = 1.0) -> void:
-	var tween = create_tween()
+	var tween: Tween = create_tween()
 	tween.tween_property(sprite, "modulate", colour, duration)
 	tween.tween_property(sprite, "modulate", Color(1, 1, 1, 1), 0.1)
 		
@@ -278,15 +294,15 @@ func _on_attack_timeout() -> void:
 	is_attacking = false
 
 func _on_regen_timeout() -> void:
-	var time_since_last_hit = (Time.get_ticks_msec() / 1000.0) - last_hit_time
+	var time_since_last_hit: float = (Time.get_ticks_msec() / 1000.0) - last_hit_time
 	if time_since_last_hit >= regen_delay and current_health < max_health:
 		current_health = min(current_health + regen_amount, max_health)
 
 func _on_movement_timeout() -> void:
 	can_dash = true
 
-func _on_range_body_entered(body: Node2D) -> void:
+func _on_range_body_entered(_body: Node2D) -> void:
 	pass # Replace with function body.
 
-func _on_range_body_exited(body: Node2D) -> void:
+func _on_range_body_exited(_body: Node2D) -> void:
 	pass # Replace with function body.

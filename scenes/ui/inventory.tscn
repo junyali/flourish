@@ -1,0 +1,92 @@
+[gd_scene load_steps=3 format=3 uid="uid://c751t8q5si5g5"]
+
+[ext_resource type="Texture2D" uid="uid://cnfxr5rr0pjo3" path="res://art/gui/inventory/inventory_bg.png" id="1_jswn3"]
+[ext_resource type="PackedScene" uid="uid://dmcsfrnwlgk60" path="res://scenes/ui/inventory_slot.tscn" id="2_k3e10"]
+
+[node name="Inventory" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -187.0
+offset_top = 8.0
+offset_right = -9.0
+offset_bottom = 118.0
+grow_horizontal = 0
+texture = ExtResource("1_jswn3")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="GridContainer" type="GridContainer" parent="Background"]
+clip_contents = true
+custom_minimum_size = Vector2(128, 76)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -38.0
+offset_right = 64.0
+offset_bottom = 38.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 2
+theme_override_constants/v_separation = 2
+columns = 5
+
+[node name="Cell0" parent="Background/GridContainer" instance=ExtResource("2_k3e10")]
+layout_mode = 2
+
+[node name="Cell1" parent="Background/GridContainer" instance=ExtResource("2_k3e10")]
+layout_mode = 2
+
+[node name="Cell2" parent="Background/GridContainer" instance=ExtResource("2_k3e10")]
+layout_mode = 2
+
+[node name="Cell3" parent="Background/GridContainer" instance=ExtResource("2_k3e10")]
+layout_mode = 2
+
+[node name="Cell4" parent="Background/GridContainer" instance=ExtResource("2_k3e10")]
+layout_mode = 2
+
+[node name="Cell5" parent="Background/GridContainer" instance=ExtResource("2_k3e10")]
+layout_mode = 2
+
+[node name="Cell6" parent="Background/GridContainer" instance=ExtResource("2_k3e10")]
+layout_mode = 2
+
+[node name="Cell7" parent="Background/GridContainer" instance=ExtResource("2_k3e10")]
+layout_mode = 2
+
+[node name="Cell8" parent="Background/GridContainer" instance=ExtResource("2_k3e10")]
+layout_mode = 2
+
+[node name="Cell9" parent="Background/GridContainer" instance=ExtResource("2_k3e10")]
+layout_mode = 2
+
+[node name="Cell10" parent="Background/GridContainer" instance=ExtResource("2_k3e10")]
+layout_mode = 2
+
+[node name="Cell11" parent="Background/GridContainer" instance=ExtResource("2_k3e10")]
+layout_mode = 2
+
+[node name="Cell12" parent="Background/GridContainer" instance=ExtResource("2_k3e10")]
+layout_mode = 2
+
+[node name="Cell13" parent="Background/GridContainer" instance=ExtResource("2_k3e10")]
+layout_mode = 2
+
+[node name="Cell14" parent="Background/GridContainer" instance=ExtResource("2_k3e10")]
+layout_mode = 2

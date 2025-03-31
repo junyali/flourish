@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://bt3pg0fcqvm3o"]
+
+[ext_resource type="PackedScene" uid="uid://dbegfmaigk5ur" path="res://scenes/harvestable/harvestable.tscn" id="1_d7eu0"]
+[ext_resource type="Script" path="res://scripts/harvestable/winter_birch_vine_tree.gd" id="2_g1i4w"]
+[ext_resource type="Texture2D" uid="uid://cmhop5g4rpysd" path="res://art/tilemap/object/winter objects.png" id="3_nekcf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j7sit"]
+atlas = ExtResource("3_nekcf")
+region = Rect2(0, 0, 48, 64)
+
+[node name="WinterBirchVineTree" instance=ExtResource("1_d7eu0")]
+script = ExtResource("2_g1i4w")
+
+[node name="Sprite" parent="." index="0"]
+texture = SubResource("AtlasTexture_j7sit")
+offset = Vector2(-5, -31)
+
+[node name="Collision" parent="." index="2"]
+polygon = PackedVector2Array(-8, 24, -8, 26, -4, 26, -4, 24, -3, 24, -3, 26, 2, 26, 2, 24, 3, 24, 3, 26, 7, 26, 7, 24, 6, 24, 6, 22, 5, 22, 5, 20, -6, 20, -6, 22, -7, 22, -7, 24)
