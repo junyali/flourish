@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=3 uid="uid://besf4epc0yfsm"]
+
+[ext_resource type="Script" path="res://scripts/interactable/pick_up.gd" id="1_7je0m"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6pn5p"]
+radius = 0.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jmwig"]
+
+[node name="PickUp" type="StaticBody2D"]
+y_sort_enabled = true
+collision_mask = 0
+script = ExtResource("1_7je0m")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+offset = Vector2(0, -7)
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_6pn5p")
+disabled = true
+
+[node name="Area" type="Area2D" parent="."]
+position = Vector2(0, -7)
+collision_layer = 4
+collision_mask = 4
+
+[node name="Collision" type="CollisionShape2D" parent="Area"]
+shape = SubResource("CircleShape2D_jmwig")
+
+[connection signal="body_entered" from="Area" to="." method="_on_area_body_entered"]

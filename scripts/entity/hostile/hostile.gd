@@ -25,7 +25,8 @@ enum State {
 	IDLE,
 	WALK,
 	CHASE,
-	ATTACK
+	ATTACK,
+	DEAD
 }
 
 # Node References
@@ -74,8 +75,6 @@ func handle_movement(delta: float) -> void:
 		if knockback_velocity.length() < 1:
 			is_knocked_back = false
 			knockback_velocity = Vector2.ZERO
-			
-		print("Applied Knockback: ", knockback_velocity)
 	
 	velocity += knockback_velocity
 	move_and_slide()
@@ -86,7 +85,6 @@ func play_animation(state: String, direction: Vector2) -> void:
 	sprite.play(state)
 	
 func take_damage(options: DamageOptions):
-	print(1)
 	if is_invincible and not options.bypass_iframe:
 		return
 		

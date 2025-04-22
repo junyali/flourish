@@ -8,6 +8,8 @@ var sfx_players: Array[AudioStreamPlayer] = []
 var spatial_sfx_players: Dictionary = {}
 var sfx_pool_size: int = 32
 
+var looping: bool = false
+
 # Volume
 var master_volume: float = 1.0 : set = set_master_volume
 var music_volume: float = 1.0 : set = set_music_volume
@@ -25,9 +27,10 @@ func _ready() -> void:
 	# Initialise main non-spatial music player
 	music_player = AudioStreamPlayer.new()
 	music_player.bus = MUSIC_BUS
+	music_player.finished.connect(_on_music_finished)
 	add_child(music_player)
 	
-	#SoundManager.play_music(load("res://sfx/music/field_theme_1.wav"), 1.0)
+	SoundManager.play_music(load("res://sfx/music/field_theme_1.wav"), 1.0)
 	
 	for i in range(sfx_pool_size):
 		var player = AudioStreamPlayer.new()
@@ -41,16 +44,16 @@ func _ready() -> void:
 	set_ambience_volume(ambience_volume)
 	
 ## ----- MUSIC PLAYBACK ----- ##
-func play_music(track: AudioStream, fade_time: float = 1.0) -> void:
-	print(music_player)
-	if music_player.stream == track:
-		return
-		
+func play_music(track: AudioStream, fade_time: float = 1.0, loop: bool = true) -> void:
 	if music_player.playing:
+		if music_player.stream == track:
+			return
 		fade_out(music_player, fade_time)
+		await get_tree().create_timer(fade_time).timeout
 		
-	await get_tree().create_timer(fade_time).timeout
+	music_player.stop()
 	music_player.stream = track
+	looping = loop
 	music_player.play()
 	fade_in(music_player, fade_time)
 	
@@ -129,3 +132,7 @@ func set_sfx_volume(value: float) -> void:
 
 func set_ambience_volume(value: float) -> void:
 	ambience_volume = clamp(value, 0.0, 1.0)
+	
+func _on_music_finished() -> void:
+	if looping:
+		music_player.play()

@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://dvcxs1ke6xdcf"]
+
+[ext_resource type="PackedScene" uid="uid://cas6tkewujsby" path="res://scenes/harvestable/crop/crop_harvestable.tscn" id="1_3x5pu"]
+[ext_resource type="Script" path="res://scripts/harvestable/crop/lettuce_plot.gd" id="2_gdhiq"]
+[ext_resource type="Texture2D" uid="uid://bn0j2qd662yn" path="res://art/gui/item/plants_1.png" id="3_d2aas"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1irmq"]
+atlas = ExtResource("3_d2aas")
+region = Rect2(64, 64, 16, 16)
+
+[node name="Lettuce_Plot" instance=ExtResource("1_3x5pu")]
+collision_layer = 1
+script = ExtResource("2_gdhiq")
+
+[node name="Sprite" parent="." index="0"]
+texture = SubResource("AtlasTexture_1irmq")
+offset = Vector2(0, -6)
+
+[node name="Collision" parent="." index="3"]
+polygon = PackedVector2Array(-7, 0, -7, -7, 6, -7, 6, 0)

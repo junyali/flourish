@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://bubcxie0yiwmy"]
+
+[ext_resource type="PackedScene" uid="uid://cas6tkewujsby" path="res://scenes/harvestable/crop/crop_harvestable.tscn" id="1_gyrds"]
+[ext_resource type="Script" path="res://scripts/harvestable/crop/onion_plot.gd" id="2_2lxnv"]
+[ext_resource type="Texture2D" uid="uid://bn0j2qd662yn" path="res://art/gui/item/plants_1.png" id="3_pgv34"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1irmq"]
+atlas = ExtResource("3_pgv34")
+region = Rect2(64, 48, 16, 16)
+
+[node name="Onion_Plot" instance=ExtResource("1_gyrds")]
+collision_layer = 1
+script = ExtResource("2_2lxnv")
+
+[node name="Sprite" parent="." index="0"]
+texture = SubResource("AtlasTexture_1irmq")
+offset = Vector2(0, -6)
+
+[node name="Collision" parent="." index="3"]
+polygon = PackedVector2Array(-7, 0, -7, -7, 6, -7, 6, 0)

@@ -1,0 +1,124 @@
+[gd_scene load_steps=8 format=3 uid="uid://cycoxxorilpwp"]
+
+[ext_resource type="Script" path="res://scripts/ui/end.gd" id="1_a1exj"]
+[ext_resource type="Texture2D" uid="uid://drsrvr3t2y8km" path="res://art/title.png" id="1_evl5j"]
+[ext_resource type="Texture2D" uid="uid://suyjk0a03uqh" path="res://art/gui/hud/trophy.png" id="1_oa6el"]
+[ext_resource type="LabelSettings" uid="uid://f0i5bqfe2ptn" path="res://assets/labelsetting/title.tres" id="2_rbtm1"]
+[ext_resource type="Texture2D" uid="uid://ba3fdegwo2qq0" path="res://art/gui/hud/death.png" id="4_froky"]
+[ext_resource type="LabelSettings" uid="uid://dy41k4x12in6p" path="res://assets/labelsetting/subtitle.tres" id="5_0uxqx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p3j4f"]
+bg_color = Color(0.099986, 0.099986, 0.099986, 1)
+
+[node name="End" type="Control"]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_a1exj")
+
+[node name="Background" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_p3j4f")
+
+[node name="Title" type="TextureRect" parent="Background"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -240.0
+offset_top = -292.0
+offset_right = 240.0
+offset_bottom = -161.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(240, 65)
+texture = ExtResource("1_evl5j")
+metadata/_edit_use_anchors_ = true
+
+[node name="Trophy" type="TextureRect" parent="Background"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -84.0
+offset_right = 20.0
+offset_bottom = -44.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(3, 3)
+pivot_offset = Vector2(20, 22)
+texture = ExtResource("1_oa6el")
+metadata/_edit_use_anchors_ = true
+
+[node name="Time" type="Label" parent="Background"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -94.0
+offset_top = -4.0
+offset_right = 94.0
+offset_bottom = 54.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "30:00"
+label_settings = ExtResource("2_rbtm1")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Death" type="TextureRect" parent="Background"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -56.0
+offset_top = 76.0
+offset_right = -16.0
+offset_bottom = 116.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.418879
+texture = ExtResource("4_froky")
+expand_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Count" type="Label" parent="Background"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 4.0
+offset_top = 56.0
+offset_right = 132.0
+offset_bottom = 114.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "2
+"
+label_settings = ExtResource("5_0uxqx")
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true

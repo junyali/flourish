@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://d2xmrpr6db07"]
+
+[ext_resource type="PackedScene" uid="uid://dbegfmaigk5ur" path="res://scenes/harvestable/harvestable.tscn" id="1_yqfta"]
+[ext_resource type="Script" path="res://scripts/harvestable/abandoned_house.gd" id="2_vh1k3"]
+[ext_resource type="PackedScene" uid="uid://dfu1llnoufw2i" path="res://scenes/entity/hostile/slime_blue.tscn" id="3_8jlyi"]
+[ext_resource type="Texture2D" uid="uid://i2g0k1iap8o4" path="res://art/tilemap/object/abandoned_house.png" id="3_hre6m"]
+
+[node name="AbandonedHouse" instance=ExtResource("1_yqfta")]
+script = ExtResource("2_vh1k3")
+wave_interval = 5.0
+enemies_per_wave = 5
+enemy_types = [{
+"probability": 0.7,
+"scene": ExtResource("3_8jlyi")
+}]
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource("3_hre6m")
+offset = Vector2(0, -50)
+
+[node name="Collision" parent="." index="3"]
+visible = true
+polygon = PackedVector2Array(-47, -14, 53, -14, 53, 25, 52, 25, 52, 26, 48, 26, 48, 25, 26, 25, 26, 26, 22, 26, 22, 25, 17, 25, 17, 24, 16, 24, 16, 23, 6, 23, 6, 24, 5, 24, 5, 25, 0, 25, 0, 26, -4, 26, -4, 25, -5, 25, -5, 4, -42, 4, -42, 5, -46, 5, -46, 4, -47, 4)
+
+[node name="ProgressBar" type="ProgressBar" parent="." index="5"]
+offset_left = -49.0
+offset_top = 1.0
+offset_right = 347.0
+offset_bottom = 28.0
+scale = Vector2(0.25, 0.25)

@@ -75,7 +75,9 @@ func setup_cue() -> void:
 		
 func check_growth() -> void:
 	var stage_data = stages[current_stage]
-	if growth_timer >= stage_data.growth_time:
+	var random_factor = randf() * stage_data.growth_randomness / 100.0
+	var adjusted_growth_time = max(stage_data.growth_time * (1.0 + random_factor), stage_data.growth_time * 0.5)
+	if growth_timer >= adjusted_growth_time:
 		if stage_data.require_water and not is_watered:
 			needs_watering = true
 			return
@@ -106,6 +108,15 @@ func advance_stage() -> void:
 func plant_seed(crop_id: String) -> bool:
 	if current_stage != Stage.EMPTY:
 		return false
+		
+	if Global.Player:
+		for item in GlobalInventory.get_items():
+			if item and item.item_id == crop_id + "_seed":
+				if item.quantity > 0:
+					GlobalInventory.remove_item(crop_id + "_seed", 1)
+					break
+				else:
+					return false
 		
 	current_crop = crop_id
 	current_stage = Stage.SEEDED

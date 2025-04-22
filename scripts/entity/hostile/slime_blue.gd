@@ -3,9 +3,8 @@ extends "res://scripts/entity/hostile/hostile.gd"
 # Slime Variables
 @export var roam_speed: float = 40.0
 @export var roam_interval: float = 3.0
-@export var chase_speed: float = 60.0
+@export var chase_speed: float = 20.0
 @export var idle_chance: float = 0.1
-
 
 var current_state: State = State.IDLE
 var target_direction: Vector2 = Vector2.ZERO
@@ -22,7 +21,7 @@ func _ready() -> void:
 	current_health = max_health
 	attack_damage = 5.0
 	attack_speed = 1.0
-	max_speed = 20.0
+	max_speed = 15.0
 	shield = 5
 	shield_multiplier = 0.1
 	loot_table = [
@@ -58,7 +57,6 @@ func _physics_process(delta: float) -> void:
 				handle_attack()
 	
 func handle_movement(delta: float) -> void:
-	#print("State:", current_state, "Velocity:", velocity)
 	var base_velocity: Vector2 = Vector2.ZERO
 	match current_state:
 		State.WALK:

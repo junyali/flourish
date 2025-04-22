@@ -1,0 +1,11 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://f0i5bqfe2ptn"]
+
+[ext_resource type="FontFile" uid="uid://rywo2oam5npp" path="res://assets/font/VCR_OSD_MONO_1.001.ttf" id="1_nskeh"]
+
+[resource]
+font = ExtResource("1_nskeh")
+font_size = 64
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 8
+shadow_color = Color(0.2, 0.2, 0.2, 1)

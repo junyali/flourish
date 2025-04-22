@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://bk7x51r8qfwrl"]
+
+[ext_resource type="PackedScene" uid="uid://diy82vfv5j7xg" path="res://scenes/entity/hostile/hostile.tscn" id="1_0bx2t"]
+[ext_resource type="Script" path="res://scripts/entity/hostile/angry_bones.gd" id="2_icqo6"]
+[ext_resource type="SpriteFrames" uid="uid://mcmb6r2iknq0" path="res://assets/spriteframes/entity/hostile/angry_bones.tres" id="3_ixu5q"]
+
+[node name="Angry_Bones" instance=ExtResource("1_0bx2t")]
+collision_layer = 1
+script = ExtResource("2_icqo6")
+roam_speed = 40.0
+roam_interval = 3.0
+chase_speed = 40.0
+idle_chance = 0.1
+
+[node name="Sprite" parent="." index="0"]
+sprite_frames = ExtResource("3_ixu5q")
+animation = &"front_idle"
+frame = 5
+frame_progress = 0.471265
+offset = Vector2(0, -8)
+
+[node name="Roam" type="Timer" parent="." index="10"]
+
+[connection signal="timeout" from="Roam" to="." method="_on_roam_timeout"]

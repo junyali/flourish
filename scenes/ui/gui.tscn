@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b7w7djcde0apj"]
+[gd_scene load_steps=12 format=3 uid="uid://b7w7djcde0apj"]
 
 [ext_resource type="Script" path="res://scripts/ui/gui.gd" id="1_ln8qm"]
 [ext_resource type="Texture2D" uid="uid://c80c87tjnqx6e" path="res://art/gui/hud/heart_base.png" id="2_1rjc3"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://uax1uahljq4m" path="res://art/gui/hud/attack.png" id="8_r7mev"]
 [ext_resource type="PackedScene" uid="uid://c751t8q5si5g5" path="res://scenes/ui/inventory.tscn" id="9_qhias"]
 [ext_resource type="PackedScene" uid="uid://b87h2fyu3uoqi" path="res://scenes/ui/hotbar.tscn" id="10_rpkla"]
+[ext_resource type="PackedScene" uid="uid://cycoxxorilpwp" path="res://scenes/ui/end.tscn" id="11_nssfa"]
 
 [node name="UICanvas" type="CanvasLayer"]
 script = ExtResource("1_ln8qm")
@@ -162,3 +163,5 @@ grow_horizontal = 0
 grow_vertical = 0
 theme_override_constants/separation = -16
 alignment = 2
+
+[node name="End" parent="." instance=ExtResource("11_nssfa")]

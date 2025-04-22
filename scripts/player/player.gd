@@ -87,12 +87,6 @@ func _ready() -> void:
 	movement_timer.wait_time = dash_cooldown
 	movement_timer.one_shot = false
 	
-	Hotbar.add_tool("sword", 0)
-	Hotbar.add_tool("pickaxe", 1)
-	Hotbar.add_tool("axe", 2)
-	Hotbar.add_tool("hoe", 3)
-	Hotbar.add_tool("watering_can", 4)
-	
 	# Set defaults
 	play_animation(State.IDLE, Vector2(0, 1)) # Default front idle animation
 	sprite.modulate = Color.WHITE
@@ -100,6 +94,8 @@ func _ready() -> void:
 	regen_timer.start()
 	
 	Global.Player = self
+	
+	SignalBus.seed_clicked.connect(plant_nearby_seed)
 
 func _physics_process(delta: float) -> void:
 	handle_movement(delta)
@@ -174,33 +170,91 @@ func handle_movement(delta: float) -> void:
 	
 func handle_action() -> void:
 	if Input.is_action_just_pressed("action") and not is_attacking:
-		var selected_tool = Hotbar.tools[Hotbar.selected_slot]
+		if Hotbar.selected_slot >= 0 and Hotbar.selected_slot < Hotbar.tools.size():
+			var selected_tool = Hotbar.tools[Hotbar.selected_slot]
+			if selected_tool == "":
+				return
 	
-		is_attacking = true
-		play_animation(State.ATTACK, facing_direction)
-		attack_timer.start()
-		
-		for body in attack_area.get_overlapping_bodies():
-			if body.is_in_group("entity") and selected_tool == "sword":
-				var damage_params = DamageOptions.new({
-					"amount": 10.0,
-					"knockback_power": 16,
-					"knockback_direction": Vector2(10, 10),
-					"attacker": self
-				})
-				body.take_damage(damage_params)
-			elif body.is_in_group("harvestable"):
-				if body.is_in_group("require_pickaxe"):
-					if selected_tool == "pickaxe":
-						body.take_damage(1)
-				elif body.is_in_group("require_axe"):
-					if selected_tool == "axe":
-						body.take_damage(1)
-				elif body.is_in_group("require_hoe"):
-					if selected_tool == "hoe":
-						body.take_damage(1)
+			is_attacking = true
+			attack_timer.start()
+
+			if selected_tool == "watering_can":
+				for body in attack_area.get_overlapping_bodies():
+					if body.is_in_group("crop"):
+						body.water_crop()
+			else:
+				var swing_sound = load("res://sfx/player/swing_" + str(randi_range(1, 2)) + ".wav")
+				SoundManager.play_sfx(swing_sound, 0.5)
+				play_animation(State.ATTACK, facing_direction)
+				var nearest_body = get_nearest_harvestable_body(selected_tool)
+				if nearest_body:
+					if nearest_body.is_in_group("entity") and selected_tool == "sword":
+						var damage_params = DamageOptions.new({
+						"amount": 10.0,
+						"knockback_power": 16,
+						"knockback_direction": Vector2(10, 10),
+						"attacker": self
+						})
+						nearest_body.take_damage(damage_params)
+					elif nearest_body.is_in_group("harvestable"):
+						if nearest_body.is_in_group("require_pickaxe") and selected_tool == "pickaxe":
+							nearest_body.take_damage(1)
+						elif nearest_body.is_in_group("require_axe") and selected_tool == "axe":
+							nearest_body.take_damage(1)
+						elif nearest_body.is_in_group("require_hoe") and selected_tool == "hoe":
+							nearest_body.take_damage(1)
+						else:
+							pass
 				else:
-					body.take_damage(1)
+					for body in attack_area.get_overlapping_bodies():
+						if body.is_in_group("entity") and selected_tool == "sword":
+							var damage_params = DamageOptions.new({
+							"amount": 10.0,
+							"knockback_power": 16,
+							"knockback_direction": Vector2(10, 10),
+							"attacker": self
+							})
+							body.take_damage(damage_params)
+						elif body.is_in_group("harvestable"):
+							if body.is_in_group("require_pickaxe") and selected_tool == "pickaxe":
+								body.take_damage(1)
+							elif body.is_in_group("require_axe") and selected_tool == "axe":
+								body.take_damage(1)
+							elif body.is_in_group("require_hoe") and selected_tool == "hoe":
+								body.take_damage(1)
+							else:
+								pass
+						elif body.is_in_group("cloud"):
+							if body.check_requirements():
+								body.remove()
+
+func get_nearest_harvestable_body(selected_tool: String) -> Node:
+	var nearest_body = null
+	var min_distance = 9999
+	var player_pos = global_position
+	for body in attack_area.get_overlapping_bodies():
+		if body.is_in_group("harvestable"):
+			if (body.is_in_group("require_pickaxe") and selected_tool == "pickaxe") or (body.is_in_group("require_axe") and selected_tool == "axe") or (body.is_in_group("require_hoe") and selected_tool == "hoe") or (not body.is_in_group("require_pickaxe") and not body.is_in_group("require_axe") and not body.is_in_group("require_hoe")):
+				var distance = player_pos.distance_to(body.global_position)
+				if distance < min_distance:
+					min_distance = distance
+					nearest_body = body
+	return nearest_body
+	
+						
+func plant_nearby_seed(item_id: String) -> void:
+	var nearest_crop = null
+	var min_distance = 9999
+	var player_pos = global_position
+	for body in attack_area.get_overlapping_bodies():
+		if body.is_in_group("crop") and body.is_in_group("harvestable"):
+			var distance = player_pos.distance_to(body.global_position)
+			if distance < min_distance:
+				min_distance = distance
+				nearest_crop = body
+				
+	if nearest_crop and nearest_crop.current_stage == nearest_crop.Stage.EMPTY:
+		nearest_crop.plant_seed(item_id.replace("_seed", ""))
 
 func play_animation(state: State, direction: Vector2) -> void:
 	var dir_str: String = str(direction)
@@ -228,6 +282,7 @@ func play_animation(state: State, direction: Vector2) -> void:
 		
 func take_damage(options: DamageOptions) -> void:
 	if is_vulnerable:
+		SoundManager.play_sfx(load("res://sfx/player/hurt.wav"), 0.5)
 		if not options.bypass_shield:
 			# funni name :3
 			# Current formula is logarithmic
@@ -235,7 +290,6 @@ func take_damage(options: DamageOptions) -> void:
 			# var THE_FORMULA = snapped(max(amount - (log(shield + 1) * shield_multiplier), 0), 0.01)
 			var THE_FORMULA = max(options.amount - (log(shield + 1) * shield_multiplier), 0)
 			current_health -= THE_FORMULA
-			print("Damage Received: %s | Shield: %s | Damage Taken: %s" % [options.amount, shield, THE_FORMULA])
 		else:
 			current_health -= options.amount
 		if not options.bypass_iframe:
@@ -276,8 +330,13 @@ func calculate_attack_damage() -> float:
 		
 func respawn() -> void:
 	# (Insert respawn mechanic here idk)
+	Global.death_count += 1
+	SoundManager.play_sfx(load("res://sfx/player/respawn.wav"), 0.5)
 	current_health = max_health
-	position = Vector2(200, 200)
+	position = Vector2(1534, 1034)
+
+	for effect_name in status_effects.keys():
+		remove_status_effect(effect_name)
 	
 func _on_iframe_timeout() -> void:
 	flash_timer.stop()

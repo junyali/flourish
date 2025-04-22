@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://c1kn82ria82jv"]
+
+[ext_resource type="PackedScene" uid="uid://diy82vfv5j7xg" path="res://scenes/entity/hostile/hostile.tscn" id="1_vrrv0"]
+[ext_resource type="Script" path="res://scripts/entity/hostile/mushroom_blue.gd" id="2_cceh2"]
+[ext_resource type="SpriteFrames" uid="uid://b5m02vdjni4c2" path="res://assets/spriteframes/entity/hostile/mushroom_blue.tres" id="3_6ngye"]
+
+[node name="Mushroom_Blue" instance=ExtResource("1_vrrv0")]
+collision_layer = 1
+script = ExtResource("2_cceh2")
+roam_speed = 20.0
+roam_interval = 3.0
+chase_speed = 40.0
+idle_chance = 0.1
+
+[node name="Sprite" parent="." index="0"]
+sprite_frames = ExtResource("3_6ngye")
+animation = &"death"
+offset = Vector2(0, -8)
+
+[node name="Roam" type="Timer" parent="." index="10"]
+
+[connection signal="timeout" from="Roam" to="." method="_on_roam_timeout"]

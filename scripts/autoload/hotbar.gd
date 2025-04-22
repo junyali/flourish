@@ -2,7 +2,7 @@
 
 const HOTBAR_SIZE: int = 5
 
-var tools: Array = []
+var tools: Array = ["", "", "", "", ""]
 var selected_slot: int = 0
 var last_input_time: float = 0.0
 
@@ -46,15 +46,22 @@ func select_slot(slot: int) -> void:
 	if slot >= 0 and slot < HOTBAR_SIZE:
 		selected_slot = slot
 		hotbar_changed.emit(selected_slot)
+		
+func check_tool(tool) -> bool:
+	return tool in tools
 
 func add_tool(tool, index: int = -1) -> bool:
-	if tools.size() < HOTBAR_SIZE:
-		if index <= -1 or index >= HOTBAR_SIZE:
-			tools.append(tool)
-		else:
-			tools.insert(index, tool)
+	if index <= -1 or index >= HOTBAR_SIZE:
+		for i in range(HOTBAR_SIZE):
+			if tools[i] == "":
+				tools[i] = tool
+				return true
+		return false
+	else:
+		tools[index] = tool
 		return true
 	return false
 
 func remove_tool(tool) -> void:
-	tools.erase(tool)
+	if tool in tools:
+		tools[tools.find(tool)] = ""

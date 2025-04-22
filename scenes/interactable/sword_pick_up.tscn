@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=3 uid="uid://c18qnyutnherh"]
+
+[ext_resource type="PackedScene" uid="uid://besf4epc0yfsm" path="res://scenes/interactable/pick_up.tscn" id="1_d5dxk"]
+[ext_resource type="Script" path="res://scripts/interactable/sword_pick_up.gd" id="2_nuroh"]
+[ext_resource type="Texture2D" uid="uid://dd0wbw0jduqhe" path="res://art/gui/item/tools.png" id="3_byx34"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r4hbw"]
+atlas = ExtResource("3_byx34")
+region = Rect2(64, 0, 16, 16)
+
+[node name="SwordPickUp" instance=ExtResource("1_d5dxk")]
+script = ExtResource("2_nuroh")
+
+[node name="Sprite" parent="." index="0"]
+texture = SubResource("AtlasTexture_r4hbw")

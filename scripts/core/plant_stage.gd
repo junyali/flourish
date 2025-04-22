@@ -7,6 +7,7 @@ class_name PlantStage
 @export var tool_hint_texture: Texture2D
 @export var sprite_offset: Vector2
 @export var growth_time: float
+@export var growth_randomness: float
 @export var require_water: bool
 @export var one_hit: bool # Bypasses health and hardness
 @export var loot_table: LootTable
@@ -15,6 +16,7 @@ func _init(data: Dictionary = {}) -> void:
 	texture_atlas = data.get("texture_atlas", null)
 	sprite_offset = data.get("sprite_offset", Vector2.ZERO)
 	growth_time = data.get("growth_time", 0.0)
+	growth_randomness = data.get("growth_randomness", 0.0)
 	health = data.get("health", 1.0)
 	hardness = data.get("hardness", 0.0)
 	one_hit = data.get("one_hit", false)

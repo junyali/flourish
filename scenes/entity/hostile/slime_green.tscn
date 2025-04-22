@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://bs2nom27stdmx"]
+
+[ext_resource type="PackedScene" uid="uid://diy82vfv5j7xg" path="res://scenes/entity/hostile/hostile.tscn" id="1_onv2k"]
+[ext_resource type="Script" path="res://scripts/entity/hostile/slime_blue.gd" id="2_ndqlm"]
+[ext_resource type="SpriteFrames" uid="uid://pmlxscj5xumo" path="res://assets/spriteframes/entity/hostile/slime_green.tres" id="3_j4b5q"]
+
+[node name="Slime_Green" instance=ExtResource("1_onv2k")]
+collision_layer = 1
+script = ExtResource("2_ndqlm")
+roam_speed = 40.0
+roam_interval = 3.0
+chase_speed = 20.0
+idle_chance = 0.1
+
+[node name="Sprite" parent="." index="0"]
+sprite_frames = ExtResource("3_j4b5q")
+animation = &"walk"
+offset = Vector2(0, -8)
+
+[node name="Roam" type="Timer" parent="." index="10"]
+
+[connection signal="timeout" from="Roam" to="." method="_on_roam_timeout"]

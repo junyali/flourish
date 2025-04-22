@@ -6,7 +6,8 @@ func _ready():
 		Stage.SEEDED: PlantStage.new({
 			"hardness": 0.0,
 			"health": 0.1,
-			"growth_time": 60.0,
+			"growth_time": 10.0,
+			"growth_randomness": 500.0,
 			"texture_atlas": ItemDatabase.get_sprite_texture("wheat_seed"),
 			"sprite_offset": Vector2(0, -4),
 			"one_hit": true,
@@ -16,7 +17,8 @@ func _ready():
 		Stage.SPROUTING: PlantStage.new({
 			"hardness": 0.0,
 			"health": 0.1,
-			"growth_time": 5.0,
+			"growth_time": 10.0,
+			"growth_randomness": 500.0,
 			"texture_atlas": ItemDatabase.get_sprite_texture("wheat_sprout"),
 			"sprite_offset": Vector2(0, -4),
 			"one_hit": true,
@@ -26,7 +28,8 @@ func _ready():
 		Stage.GROWING: PlantStage.new({
 			"hardness": 0.0,
 			"health": 0.1,
-			"growth_time": 5.0,
+			"growth_time": 10.0,
+			"growth_randomness": 500.0,
 			"texture_atlas": ItemDatabase.get_sprite_texture("wheat_growing"),
 			"sprite_offset": Vector2(0, -4),
 			"one_hit": true,
@@ -36,7 +39,8 @@ func _ready():
 		Stage.FLOWERING: PlantStage.new({
 			"hardness": 0.0,
 			"health": 0.1,
-			"growth_time": 5.0,
+			"growth_time": 10.0,
+			"growth_randomness": 500.0,
 			"texture_atlas": ItemDatabase.get_sprite_texture("wheat_flowering"),
 			"sprite_offset": Vector2(0, -4),
 			"one_hit": true,
@@ -46,7 +50,8 @@ func _ready():
 		Stage.RIPE: PlantStage.new({
 			"hardness": 0.0,
 			"health": 0.1,
-			"growth_time": 5.0,
+			"growth_time": 10.0,
+			"growth_randomness": 500.0,
 			"texture_atlas": ItemDatabase.get_sprite_texture("wheat_ripe"),
 			"sprite_offset": Vector2(0, -4),
 			"one_hit": true,
@@ -80,7 +85,7 @@ func setup_loot_table(stage: Stage) -> LootTable:
 			table.add_entry("wheat_seed", 1, 3, 1.0)
 			table.add_entry("wheat", 1, 1, 0.5)
 		Stage.RIPE:
-			table.add_entry("wheat_seed", 0, 2, 0.8)
+			table.add_entry("wheat_seed", 1, 2, 0.8)
 			table.add_entry("wheat", 1, 3, 1.0)
 		_:
 			pass

@@ -7,6 +7,7 @@ func _ready():
 			"hardness": 0.0,
 			"health": 0.1,
 			"growth_time": 5.0,
+			"growth_randomness": 100.0,
 			"texture_atlas": ItemDatabase.get_sprite_texture("carrot_seed"),
 			"sprite_offset": Vector2(0, -4),
 			"one_hit": true,
@@ -17,6 +18,7 @@ func _ready():
 			"hardness": 0.0,
 			"health": 0.1,
 			"growth_time": 5.0,
+			"growth_randomness": 100.0,
 			"texture_atlas": ItemDatabase.get_sprite_texture("carrot_sprout"),
 			"sprite_offset": Vector2(0, -4),
 			"one_hit": true,
@@ -27,16 +29,18 @@ func _ready():
 			"hardness": 0.0,
 			"health": 0.1,
 			"growth_time": 5.0,
+			"growth_randomness": 100.0,
 			"texture_atlas": ItemDatabase.get_sprite_texture("carrot_growing"),
 			"sprite_offset": Vector2(0, -4),
 			"one_hit": true,
-			"require_water": false,
+			"require_water": true,
 			"loot_table": setup_loot_table(Stage.GROWING)
 		}),
 		Stage.FLOWERING: PlantStage.new({
 			"hardness": 0.0,
 			"health": 0.1,
 			"growth_time": 5.0,
+			"growth_randomness": 100.0,
 			"texture_atlas": ItemDatabase.get_sprite_texture("carrot_flowering"),
 			"sprite_offset": Vector2(0, -4),
 			"one_hit": true,
@@ -47,6 +51,7 @@ func _ready():
 			"hardness": 0.0,
 			"health": 0.1,
 			"growth_time": 5.0,
+			"growth_randomness": 100.0,
 			"texture_atlas": ItemDatabase.get_sprite_texture("carrot_ripe"),
 			"sprite_offset": Vector2(0, -4),
 			"one_hit": true,
@@ -80,7 +85,7 @@ func setup_loot_table(stage: Stage) -> LootTable:
 			table.add_entry("carrot_seed", 1, 3, 1.0)
 			table.add_entry("carrot", 1, 1, 0.5)
 		Stage.RIPE:
-			table.add_entry("carrot_seed", 0, 2, 0.8)
+			table.add_entry("carrot_seed", 1, 2, 0.8)
 			table.add_entry("carrot", 1, 3, 1.0)
 		_:
 			pass

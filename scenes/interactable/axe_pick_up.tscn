@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=3 uid="uid://dj7n8rohj6171"]
+
+[ext_resource type="PackedScene" uid="uid://besf4epc0yfsm" path="res://scenes/interactable/pick_up.tscn" id="1_3acbl"]
+[ext_resource type="Script" path="res://scripts/interactable/axe_pick_up.gd" id="2_xsx3a"]
+[ext_resource type="Texture2D" uid="uid://dd0wbw0jduqhe" path="res://art/gui/item/tools.png" id="3_650yu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r4hbw"]
+atlas = ExtResource("3_650yu")
+region = Rect2(48, 0, 16, 16)
+
+[node name="AxePickUp" instance=ExtResource("1_3acbl")]
+script = ExtResource("2_xsx3a")
+
+[node name="Sprite" parent="." index="0"]
+texture = SubResource("AtlasTexture_r4hbw")

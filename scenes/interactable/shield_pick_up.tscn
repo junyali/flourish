@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://bgi8fkd0ni1lp"]
+
+[ext_resource type="PackedScene" uid="uid://besf4epc0yfsm" path="res://scenes/interactable/pick_up.tscn" id="1_j2eu3"]
+[ext_resource type="Script" path="res://scripts/interactable/shield_pick_up.gd" id="2_n6af8"]
+[ext_resource type="Texture2D" uid="uid://dhywxck57k65a" path="res://art/gui/hud/shield.png" id="3_hdqq4"]
+
+[node name="ShieldPickUp" instance=ExtResource("1_j2eu3")]
+script = ExtResource("2_n6af8")
+
+[node name="Sprite" parent="." index="0"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_hdqq4")
+offset = Vector2(0, -12)

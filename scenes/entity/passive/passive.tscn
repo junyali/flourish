@@ -7,6 +7,8 @@ radius = 5.0
 
 [node name="Passive_Entity" type="CharacterBody2D"]
 y_sort_enabled = true
+collision_layer = 3
+collision_mask = 0
 platform_floor_layers = 0
 script = ExtResource("1_246x0")
 

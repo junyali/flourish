@@ -1,0 +1,12 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://dy41k4x12in6p"]
+
+[ext_resource type="FontFile" uid="uid://rywo2oam5npp" path="res://assets/font/VCR_OSD_MONO_1.001.ttf" id="1_g3lyb"]
+
+[resource]
+font = ExtResource("1_g3lyb")
+font_size = 32
+font_color = Color(1, 0.14902, 0.258824, 1)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 0
+shadow_color = Color(0.2, 0.2, 0.2, 1)

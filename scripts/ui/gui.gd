@@ -39,6 +39,32 @@ func _process(delta: float) -> void:
 	if dragging_item and drag_node:
 		drag_node.position = get_viewport().get_global_mouse_position() + drag_offset
 		
+func _input(event: InputEvent) -> void:
+	var mouse_pos = get_viewport().get_mouse_position()
+	for slot in inventory_grid.get_children():
+		if slot.get_global_rect().has_point(mouse_pos):
+			if event is InputEventMouseMotion:
+				slot.modulate = Color(0.8, 0.8, 0.8)
+			elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+				slot.modulate = Color(0.6, 0.6, 0.6)
+				if slot.item_id and "_seed" in slot.item_id:
+					SignalBus.seed_clicked.emit(slot.item_id)
+			elif event is InputEventMouseButton and not event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+				slot.modulate = Color(0.8, 0.8, 0.8)
+		else:
+			slot.modulate = Color(1, 1, 1)
+
+func get_nearest_crop() -> Node:
+	var nearest_crop = null
+	var min_distance = 9999999
+	var player_pos = player.global_position
+	for crop in get_tree().get_nodes_in_group("crop_harvestable"):
+		var distance = player_pos.distance_to(crop.global_position)
+		if distance < min_distance:
+			min_distance = distance
+			nearest_crop = crop
+	return nearest_crop
+		
 func update_hotbar() -> void:
 	var slots = hotbar_slots.get_children()
 	for index in range(slots.size()):

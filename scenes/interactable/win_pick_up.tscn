@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://bd1eokgcdg56m"]
+
+[ext_resource type="PackedScene" uid="uid://besf4epc0yfsm" path="res://scenes/interactable/pick_up.tscn" id="1_qkty6"]
+[ext_resource type="Script" path="res://scripts/interactable/win_pick_up.gd" id="2_fin7t"]
+[ext_resource type="Texture2D" uid="uid://suyjk0a03uqh" path="res://art/gui/hud/trophy.png" id="3_qn5lc"]
+
+[node name="WinPickUp" instance=ExtResource("1_qkty6")]
+script = ExtResource("2_fin7t")
+
+[node name="Sprite" parent="." index="0"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_qn5lc")
+offset = Vector2(0, -12)
